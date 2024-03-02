@@ -1,0 +1,62 @@
+
+.nav-title {
+  font-family: "Kanit", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  margin-left: 16px;
+}
+.nav-content {
+  font-family: "Kanit", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+.nav-link::before {
+  transition: 200ms;
+  height: 3px;
+  content: "";
+  position: absolute;
+  background-color: black;
+}
+.nav-link {
+  text-transform: uppercase;
+  text-decoration: none;
+  color: black;
+  padding: 15px 0px;
+  margin: 0px 15px;
+  display: inline-block;
+  position: relative;
+  opacity: 0.75;
+}
+
+.nav-link:hover {
+  opacity: 1;
+}
+
+.nav-link-ltr::before {
+  width: 0%;
+  bottom: 10px;
+}
+
+.nav-link-ltr:hover::before {
+  width: 85%;
+}
+.icons {
+  .cartIcon {
+    position: relative;
+
+    span {
+      font-size: 12px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background-color: #2879fe;
+      color: white;
+      position: absolute;
+      right: -1px;
+      top: -1px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}
