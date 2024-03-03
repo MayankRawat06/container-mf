@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import "./Register.scss";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
@@ -8,8 +9,19 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 const Register = () => {
+    const [validated, setValidated] = useState(false);
+
+    const handleSubmit = (event) => {
+      const form = event.currentTarget;
+      if (form.checkValidity() === false) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+
+      setValidated(true);
+    };
   return (
-    <Form>
+    <Form noValidate validated={validated} onSubmit={handleSubmit}>
       <Container className="register-container">
         <span className="logo">Tronix.Inc</span>
         <h3 className="mt-2 mb-2">Register</h3>
@@ -26,6 +38,7 @@ const Register = () => {
                 placeholder="John"
                 required
               />
+              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             </FloatingLabel>
           </Col>
           <Col>
@@ -40,6 +53,7 @@ const Register = () => {
                 placeholder="Doe"
                 required
               />
+              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             </FloatingLabel>
           </Col>
         </Row>
@@ -54,16 +68,22 @@ const Register = () => {
             placeholder="name@example.com"
             required
           />
+          <Form.Control.Feedback type="invalid">
+            Please provide a valid email.
+          </Form.Control.Feedback>
         </FloatingLabel>
         <FloatingLabel controlId="floatingPassword" label="Password">
           <Form.Control
             name="password"
             type="password"
             placeholder="Password"
-            pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&-+=()])(?=\\S+$).{8,20}$"
-            title="Must contain at least one digit, one uppercase, one lowercase letter, a special character, and at least 8 or more characters"
             required
           />
+          <Form.Control.Feedback type="invalid">
+            Password must contain at least one digit, one uppercase, one
+            lowercase letter, a special character, and at least 8 or more
+            characters
+          </Form.Control.Feedback>
         </FloatingLabel>
         <Button variant="primary" type="submit" className="register-btn">
           Register

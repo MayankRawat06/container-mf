@@ -7,7 +7,6 @@ import "./Header.scss"
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
 const Header = () => {
   return (
     <Navbar className="bg-body-tertiary my-navbar" expand="lg">
@@ -28,7 +27,7 @@ const Header = () => {
           <Nav.Link href="/">
             <FavoriteBorderOutlinedIcon />
           </Nav.Link>
-          <Nav.Link className="cartIcon" href="/">
+          <Nav.Link className="cartIcon" href="/cart">
             <ShoppingCartOutlinedIcon />
             <span>0</span>
           </Nav.Link>
