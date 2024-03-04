@@ -7,6 +7,14 @@ import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import { Link } from "react-router-dom";
 import axios from "axios";
+function showPassword() {
+  var x = document.getElementById("floatingPassword");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+}
 const Login = () => {
   const [credentials, setCredentials] = useState({
     email: "",
@@ -83,6 +91,13 @@ const Login = () => {
             Please provide a valid password.
           </Form.Control.Feedback>
         </FloatingLabel>
+        <Form.Check 
+          className="mt-3"
+          type="checkbox"
+          id={`default-checkbox`}
+          label={`Show Password`}
+          onClick={showPassword}
+        />
         <Button variant="primary" type="submit" className="login-btn">
           Login
         </Button>
