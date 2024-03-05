@@ -15,7 +15,6 @@ const Cart = ({ loggedIn, setLoggedIn }) => {
   const deleteUtils = (cartData) => {
     setCart(cartData);
     fetchCart();
-    // getTotalPrice(cart);
   };
   const [productDetails, setProductDetails] = useState([]);
   let productResults = [];
@@ -67,10 +66,9 @@ const Cart = ({ loggedIn, setLoggedIn }) => {
     <Container className="cart" fluid>
       <h1 className="m-5">Your Cart</h1>
       <div className="cart-wrapper">
-        <Row>
-          <Col sm={10}>
+        <Row className="cart-products-row">
+          <Col md="auto">
             {
-              // if delete, delete from both states
               productDetails &&
                 cart &&
                 cart.map((item, index) => {
@@ -96,7 +94,7 @@ const Cart = ({ loggedIn, setLoggedIn }) => {
                 })
             }
           </Col>
-          <Col>
+          <Col lg={4}>
             <Row>
               <OrderSummary total={total} />
             </Row>

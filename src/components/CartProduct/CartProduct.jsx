@@ -35,8 +35,8 @@ const CartProduct = ({
     }
   };
   return (
-    <Container key={productId} className="cart-product m-5">
-      <Row className="d-flex g-5">
+    <Container key={productId} className="cart-product mt-5">
+      <Row className="">
         <Col>
           <img className="cart-product-image" src={imageUrl} alt="" />
         </Col>

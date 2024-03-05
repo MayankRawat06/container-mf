@@ -1,5 +1,8 @@
 .slider {
     height: calc(100vh - 80px);
+    .slider-img {
+        filter: brightness(50%);
+    }
     .slider-title {
         margin: 2rem auto;
         font-family: "Kanit", sans-serif;

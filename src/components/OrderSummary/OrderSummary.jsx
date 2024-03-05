@@ -8,38 +8,38 @@ import Card from "react-bootstrap/Card";
 import './OrderSummary.scss'
 const OrderSummary = ({total}) => {
   return (
-    <Container className="text-center">
-      <Card className="shadow rounded mb-4">
-        <Card.Header className="mt-2">
-          <h3>Order Summary</h3>
-        </Card.Header>
-        <Card.Body>
+    <Container className="" fluid>
+      <Card className="shadow rounded mb-4 order-card">
+        <Card.Body className="p-4">
+          <h3 className="order-text-bold order-title mb-4">Order Summary</h3>
           <Row>
-            <Col>
-              <p className="lead">Subtotal</p>
+            <Col className="text-start">
+              <p className="lead text-muted">Subtotal</p>
             </Col>
-            <Col>₹{total}.00</Col>
+            <Col className="lead text-end">₹{total}.00</Col>
           </Row>
           <hr />
           <Row>
-            <Col>
-              <p className="lead">Taxes</p>
+            <Col className="text-start">
+              <p className="lead text-muted">Taxes</p>
             </Col>
-            <Col>₹{Math.round(total * 0.05)}.00</Col>
+            <Col className="lead text-end">₹{Math.round(total * 0.05)}.00</Col>
           </Row>
           <hr />
           <Row>
-            <Col>
-              <p className="lead">Shipping</p>
+            <Col className="text-start">
+              <p className="lead text-muted">Shipping</p>
             </Col>
-            <Col>₹500.00</Col>
+            <Col className="lead text-end">₹500.00</Col>
           </Row>
           <hr />
           <Row>
-            <Col>
-              <p className="lead">Total</p>
+            <Col className="text-start">
+              <p className="lead order-text-bold order-total">Order Total</p>
             </Col>
-            <Col>₹{total + 500 + Math.round(total * 0.05)}.00</Col>
+            <Col className="text-end order-text-bold order-total">
+              ₹{total + 500 + Math.round(total * 0.05)}.00
+            </Col>
           </Row>
           <Link className="link d-grid" to="/checkout">
             <Button className="btn-dark" size="lg">

@@ -51,7 +51,7 @@ function Slider() {
         return (
           <Carousel.Item className="slider" interval={1000} key={slide.image}>
             <img
-              className="d-block w-100"
+              className="d-block w-100 slider-img"
               src={slide.image}
               alt="slider image"
             />
