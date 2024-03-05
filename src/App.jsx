@@ -10,6 +10,7 @@ import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import Profile from "./pages/Profile/Profile";
 import Cart from "./pages/Cart/Cart";
+import Checkout from "./pages/Checkout/Checkout"
 const Products = React.lazy(() => import("product_mf/ProductRouter"));
 
 const Layout = ({ loggedIn, setLoggedIn }) => {
@@ -37,7 +38,7 @@ const App = () => {
           path: "/",
           element: <Home />,
         },
-        { 
+        {
           path: "/products/*",
           element: <Products loggedIn={loggedIn} setLoggedIn={setLoggedIn} />,
         },
@@ -56,6 +57,10 @@ const App = () => {
         {
           path: "/cart",
           element: <Cart loggedIn={loggedIn} setLoggedIn={setLoggedIn} />,
+        },
+        {
+          path: "/checkout",
+          element: <Checkout loggedIn={loggedIn} setLoggedIn={setLoggedIn} />,
         },
       ],
     },

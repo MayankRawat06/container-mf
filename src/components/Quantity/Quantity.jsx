@@ -3,12 +3,7 @@ import "./Quantity.scss";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import api from "../../api";
-const Quantity = ({ productId, quantity, setQuantity }) => {
-  // const handleQuantity = (e) => {
-  // const value = e.target.value;
-  // setQuantity(value);
-
-  // };
+const Quantity = ({ productId, quantity, setQuantity,fetchCart }) => {
   const handleQuantity = async (e) => {
     try {
       const value = e.target.value;
@@ -17,6 +12,7 @@ const Quantity = ({ productId, quantity, setQuantity }) => {
         productId,
         quantity: value,
       });
+      fetchCart();
     } catch (error) {
       console.log(error);
     }

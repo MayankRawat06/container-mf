@@ -17,6 +17,7 @@ const CartProduct = ({
   quantityAvailable,
   cart,
   deleteUtils,
+  fetchCart
 }) => {
   const [quantity, setQuantity] = useState(quantityInitial);
   const handleDelete = async () => {
@@ -44,7 +45,12 @@ const CartProduct = ({
           <h3>₹{price}.00</h3>
         </Col>
         <Col>
-          <Quantity productId={productId} quantity={quantity} setQuantity={setQuantity}></Quantity>
+          <Quantity
+            productId={productId}
+            quantity={quantity}
+            setQuantity={setQuantity}
+            fetchCart = {fetchCart}
+          ></Quantity>
         </Col>
         <Col>
           <CloseButton onClick={handleDelete} />

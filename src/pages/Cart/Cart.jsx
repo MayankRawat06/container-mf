@@ -7,12 +7,15 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import { Link } from "react-router-dom";
 import Col from "react-bootstrap/Col";
+import OrderSummary from "../../components/OrderSummary/OrderSummary";
 import CartProduct from "../../components/CartProduct/CartProduct";
-const Cart = () => {
+const Cart = ({ loggedIn, setLoggedIn }) => {
+  const [total, setTotal] = useState(0);
   const [cart, setCart] = useState(null);
   const deleteUtils = (cartData) => {
     setCart(cartData);
     fetchCart();
+    // getTotalPrice(cart);
   };
   const [productDetails, setProductDetails] = useState([]);
   let productResults = [];
@@ -36,55 +39,79 @@ const Cart = () => {
       console.log(error);
     }
   };
+  const getTotalPrice = () => {
+    let subtotal = 0;
+    console.log(productDetails);
+    cart.map((item, index) => {
+      const id = item.id;
+      const product = productDetails[index] ? productDetails[index].data : null;
+      subtotal = subtotal + (product ? product.price * item.quantity : 0);
+      console.log(subtotal, product);
+    });
+    setTotal(subtotal);
+  };
+
   useEffect(() => {
     fetchCart();
   }, []);
 
+  useEffect(() => {
+    cart && getTotalPrice();
+  }, [cart, productDetails]);
+
   if (!cart) {
     return <div>Loading...</div>;
   }
+
   return (
     <Container className="cart" fluid>
       <h1 className="m-5">Your Cart</h1>
-      <Row>
-        <Col sm={10}>
-          {
-            // if delete, delete from both states
-            productDetails &&
-              cart &&
-              cart.map((item, index) => {
-                const id = item.id;
-                const product = productDetails[index]
-                  ? productDetails[index].data
-                  : null;
-                console.log(product && product.title);
-                return (
-                  <CartProduct
-                    key={id}
-                    productId={item.productId}
-                    title={product && product.title}
-                    imageUrl={product && product.imageUrl}
-                    price={product && product.price}
-                    quantityInitial={item.quantity}
-                    quantityAvailable={product && product.quantityAvailable}
-                    cart={cart}
-                    deleteUtils={deleteUtils}
-                  />
-                );
-              })
-          }
-        </Col>
-        <Col>
-          <Link className="link" to="/products">
-            Continue Shopping
-          </Link>
-        </Col>
-        <Col>
-          <Link className="link" to="/products">
-            Checkout
-          </Link>
-        </Col>
-      </Row>
+      <div className="cart-wrapper">
+        <Row>
+          <Col sm={10}>
+            {
+              // if delete, delete from both states
+              productDetails &&
+                cart &&
+                cart.map((item, index) => {
+                  const id = item.id;
+                  const product = productDetails[index]
+                    ? productDetails[index].data
+                    : null;
+
+                  return (
+                    <CartProduct
+                      key={id}
+                      productId={item.productId}
+                      title={product && product.title}
+                      imageUrl={product && product.imageUrl}
+                      price={product && product.price}
+                      quantityInitial={item.quantity}
+                      quantityAvailable={product && product.quantityAvailable}
+                      cart={cart}
+                      deleteUtils={deleteUtils}
+                      fetchCart={fetchCart}
+                    />
+                  );
+                })
+            }
+          </Col>
+          <Col>
+            <Row>
+              <OrderSummary total={total} />
+            </Row>
+            <Row>
+              <Col>
+                <Link className="link d-grid" to="/products">
+                  <Button className="btn-light btn-outline-dark" size="lg">
+                    Continue Shopping
+                  </Button>
+                </Link>
+              </Col>
+            </Row>
+          </Col>
+        </Row>
+      </div>
     </Container>
   );
 };
