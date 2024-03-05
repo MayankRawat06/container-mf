@@ -1,65 +1,71 @@
-import React, { Suspense } from "react";
+import React, { Suspense, useState } from "react";
 import ReactDOM from "react-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
-import './App.scss'
+import "./App.scss";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import Profile from "./pages/Profile/Profile";
 import Cart from "./pages/Cart/Cart";
 const Products = React.lazy(() => import("product_mf/ProductRouter"));
 
-const Layout = () => {
+const Layout = ({ loggedIn, setLoggedIn }) => {
   return (
     <div className="app">
-      <Header />
+      <Header loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
       <Outlet />
       <Footer />
     </div>
   );
 };
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Layout />,
-    children: [
-      {
-        path: "/",
-        element: <Home />,
-      },
-      {
-        path: "/products/*",
-        element: <Products />,
-      },
-      {
-        path: "/auth/login",
-        element: <Login />,
-      },
-      {
-        path: "/auth/register",
-        element: <Register />,
-      },
-      {
-        path: "/profile",
-        element: <Profile />,
-      },
-      {
-        path: "/cart",
-        element: <Cart />,
-      },
-    ],
-  },
-]);
+const App = () => {
+  const [loggedIn, setLoggedIn] = useState(
+    localStorage.getItem("token") == null ? false : true
+  );
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      exact: true,
+      element: <Layout loggedIn={loggedIn} setLoggedIn={setLoggedIn} />,
+      children: [
+        {
+          path: "/",
+          element: <Home />,
+        },
+        { 
+          path: "/products/*",
+          element: <Products loggedIn={loggedIn} setLoggedIn={setLoggedIn} />,
+        },
+        {
+          path: "/auth/login",
+          element: <Login loggedIn={loggedIn} setLoggedIn={setLoggedIn} />,
+        },
+        {
+          path: "/auth/register",
+          element: <Register loggedIn={loggedIn} setLoggedIn={setLoggedIn} />,
+        },
+        {
+          path: "/profile",
+          element: <Profile loggedIn={loggedIn} setLoggedIn={setLoggedIn} />,
+        },
+        {
+          path: "/cart",
+          element: <Cart loggedIn={loggedIn} setLoggedIn={setLoggedIn} />,
+        },
+      ],
+    },
+  ]);
 
-const App = () => (
-  <div>
-    <Suspense fallback={<div>Loading..</div>}>
-      <RouterProvider router={router} />
-    </Suspense>
-  </div>
-);
+  return (
+    <div>
+      <Suspense fallback={<div>Loading..</div>}>
+        <RouterProvider router={router} />
+      </Suspense>
+    </div>
+  );
+};
 ReactDOM.render(<App />, document.getElementById("app"));

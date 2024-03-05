@@ -1,25 +1,106 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./Register.scss";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-const Register = () => {
-    const [validated, setValidated] = useState(false);
+import axios from "axios";
+function showPassword() {
+  var x = document.getElementById("floatingPassword");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+}
+const Register = ({ loggedIn, setLoggedIn }) => {
+  const [validated, setValidated] = useState(false);
 
-    const handleSubmit = (event) => {
-      const form = event.currentTarget;
-      if (form.checkValidity() === false) {
-        event.preventDefault();
-        event.stopPropagation();
+  // const handleChange = (e) => {
+  //   if (
+  //     e.target.value.match(
+  //       "(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,20}"
+  //     ) != null
+  //   ) {
+
+  //   }
+  // };
+  // const handleSubmit = (event) => {
+  //   // const form = event.currentTarget;
+  //   // if (form.checkValidity() === false) {
+  //   //   event.preventDefault();
+  //   //   event.stopPropagation();
+  //   // }
+
+  //   setValidated(true);
+  // };
+
+  const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState("");
+  const [credentials, setCredentials] = useState({
+    email: "",
+    password: "",
+    fname: "",
+    lname: "",
+  });
+  useEffect(() => {
+    if (loggedIn) {
+      navigate("/", { replace: true });
+    }
+  }, []);
+
+  // const handleChangeName = (e) => {
+  //   const fname = e.target.name == "fname" ? e.target.value : "";
+  //   const lname = e.target.name == "lname" ? e.target.value : "";
+  //   console.log(fname + lname);
+  //   setCredentials({
+  //     ...credentials,
+  //     ["name"]: fname + lname,
+  //   });
+  //   console.log(credentials);
+  // };
+  const handleChange = (e) => {
+    setCredentials({
+      ...credentials,
+      [e.target.name]: e.target.value,
+    });
+    console.log(credentials);
+  };
+  const handleSubmit = async (e) => {
+    const form = e.currentTarget;
+    e.preventDefault();
+    setValidated(true);
+    try {
+      if (form.checkValidity() === true) {
+        console.log(credentials);
+        const response = await axios.post(
+          "http://localhost:8080/auth/register",
+          {
+            "name": credentials.fname + credentials.lname,
+            "password": credentials.password,
+            "email":credentials.email
+          }
+        );
+        console.log(response.status);
+        const { token } = response.data;
+        setErrorMessage("");
+        // Store the tokens in localStorage or secure cookie for later use
+        localStorage.setItem("token", token);
+        console.log(token);
+        navigate("/");
+        setLoggedIn(true);
       }
-
-      setValidated(true);
-    };
+      // setValidated(true);
+    } catch (error) {
+      // Handle login error
+      setErrorMessage("Invalid Credentials. Oops, Try again!");
+      console.log(error);
+    }
+  };
   return (
     <Form noValidate validated={validated} onSubmit={handleSubmit}>
       <Container className="register-container">
@@ -37,6 +118,7 @@ const Register = () => {
                 type="text"
                 placeholder="John"
                 required
+                onChange={handleChange}
               />
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             </FloatingLabel>
@@ -52,6 +134,7 @@ const Register = () => {
                 type="text"
                 placeholder="Doe"
                 required
+                onChange={handleChange}
               />
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             </FloatingLabel>
@@ -66,6 +149,8 @@ const Register = () => {
             name="email"
             type="email"
             placeholder="name@example.com"
+            value={credentials.email}
+            onChange={handleChange}
             required
           />
           <Form.Control.Feedback type="invalid">
@@ -77,6 +162,8 @@ const Register = () => {
             name="password"
             type="password"
             placeholder="Password"
+            value={credentials.password}
+            onChange={handleChange}
             required
           />
           <Form.Control.Feedback type="invalid">

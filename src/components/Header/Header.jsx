@@ -3,11 +3,18 @@ import SearchIcon from "@mui/icons-material/Search";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import "./Header.scss"
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-const Header = () => {
+import "./Header.scss";
+import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import NavDropdown from "react-bootstrap/NavDropdown";
+
+function logout(setLoggedIn) {
+  localStorage.removeItem("token");
+  setLoggedIn(false);
+}
+
+const Header = ({ loggedIn, setLoggedIn }) => {
   return (
     <Navbar className="bg-body-tertiary my-navbar" expand="lg">
       <Container className="hi" fluid>
@@ -21,9 +28,24 @@ const Header = () => {
           <Nav.Link href="/">
             <SearchIcon />
           </Nav.Link>
-          <Nav.Link href="/auth/login">
-            <PersonOutlineOutlinedIcon />
-          </Nav.Link>
+          {loggedIn == false ? (
+            <Nav.Link href="/auth/login">
+              <PersonOutlineOutlinedIcon />
+            </Nav.Link>
+          ) : (
+            <NavDropdown
+              title={<PersonOutlineOutlinedIcon />}
+              id="basic-nav-dropdown"
+            >
+              <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
+              <NavDropdown.Item
+                onClick={() => logout(setLoggedIn)}
+                href="/auth/login"
+              >
+                Logout
+              </NavDropdown.Item>
+            </NavDropdown>
+          )}
           <Nav.Link href="/">
             <FavoriteBorderOutlinedIcon />
           </Nav.Link>
@@ -35,6 +57,6 @@ const Header = () => {
       </Container>
     </Navbar>
   );
-}
+};
 
 export default Header;

@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import "./Login.scss";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 function showPassword() {
   var x = document.getElementById("floatingPassword");
@@ -15,44 +15,53 @@ function showPassword() {
     x.type = "password";
   }
 }
-const Login = () => {
+const Login = ({ loggedIn, setLoggedIn }) => {
+  const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState("");
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
   });
+  useEffect(() => {
+    if (loggedIn) {
+      navigate("/", { replace: true });
+    }
+  }, []);
+
   const handleChange = (e) => {
     setCredentials({
       ...credentials,
       [e.target.name]: e.target.value,
     });
-    console.log(setCredentials);
   };
   const [validated, setValidated] = useState(false);
 
+
   const handleSubmit = async (e) => {
     const form = e.currentTarget;
-    if (form.checkValidity() === false) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
     e.preventDefault();
-
+    setValidated(true);
     try {
-      console.log(credentials);
-      const response = await axios.post(
-        "http://localhost:8080/auth/login",
-        credentials
-      );
-      console.log(response);
-      const { token } = response.data;
-
-      // Store the tokens in localStorage or secure cookie for later use
-      localStorage.setItem("token", token);
-      console.log(token);
-      setValidated(true);
-      // Redirect or perform other actions upon successful login
+      if (form.checkValidity() === true) {
+        console.log(credentials);
+        const response = await axios.post(
+          "http://localhost:8080/auth/login",
+          credentials
+        );
+        console.log(response.status);
+        const { token } = response.data;
+        setErrorMessage("");
+        // Store the tokens in localStorage or secure cookie for later use
+        localStorage.setItem("token", token);
+        console.log(token);
+        navigate("/");
+        setLoggedIn(true);
+      }
+      // setValidated(true);
     } catch (error) {
       // Handle login error
+      setErrorMessage("Invalid Credentials. Oops, Try again!");
+      console.log(error);
     }
   };
 
@@ -61,6 +70,7 @@ const Login = () => {
       <Container className="login-container">
         <span className="logo">Tronix.Inc</span>
         <h3 className="mt-2 mb-2">Login</h3>
+        <p>{errorMessage}</p>
         <FloatingLabel
           controlId="floatingInput"
           label="Email address"
@@ -91,7 +101,7 @@ const Login = () => {
             Please provide a valid password.
           </Form.Control.Feedback>
         </FloatingLabel>
-        <Form.Check 
+        <Form.Check
           className="mt-3"
           type="checkbox"
           id={`default-checkbox`}
