@@ -26,6 +26,7 @@ const Quantity = ({ productId, quantity, setQuantity,fetchCart }) => {
           defaultValue={quantity}
           type="number"
           min={1}
+          max={20}
           onChange={handleQuantity}
         />
       </InputGroup>
