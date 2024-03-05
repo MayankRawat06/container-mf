@@ -23,6 +23,7 @@ const Layout = ({ loggedIn, setLoggedIn }) => {
 };
 
 const App = () => {
+  
   const [loggedIn, setLoggedIn] = useState(
     localStorage.getItem("token") == null ? false : true
   );

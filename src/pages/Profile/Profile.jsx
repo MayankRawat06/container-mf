@@ -12,6 +12,7 @@ const Profile = () => {
             setUser(response.data);
           } catch (error) {
             // Handle error or redirect to login
+            console.log(error);
           }
         };
 

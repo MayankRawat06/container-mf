@@ -20,24 +20,6 @@ function showPassword() {
 const Register = ({ loggedIn, setLoggedIn }) => {
   const [validated, setValidated] = useState(false);
 
-  // const handleChange = (e) => {
-  //   if (
-  //     e.target.value.match(
-  //       "(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,20}"
-  //     ) != null
-  //   ) {
-
-  //   }
-  // };
-  // const handleSubmit = (event) => {
-  //   // const form = event.currentTarget;
-  //   // if (form.checkValidity() === false) {
-  //   //   event.preventDefault();
-  //   //   event.stopPropagation();
-  //   // }
-
-  //   setValidated(true);
-  // };
 
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
@@ -53,16 +35,6 @@ const Register = ({ loggedIn, setLoggedIn }) => {
     }
   }, []);
 
-  // const handleChangeName = (e) => {
-  //   const fname = e.target.name == "fname" ? e.target.value : "";
-  //   const lname = e.target.name == "lname" ? e.target.value : "";
-  //   console.log(fname + lname);
-  //   setCredentials({
-  //     ...credentials,
-  //     ["name"]: fname + lname,
-  //   });
-  //   console.log(credentials);
-  // };
   const handleChange = (e) => {
     setCredentials({
       ...credentials,
