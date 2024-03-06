@@ -52,7 +52,7 @@ const Register = ({ loggedIn, setLoggedIn }) => {
         const response = await axios.post(
           "http://localhost:8080/auth/register",
           {
-            "name": credentials.fname + credentials.lname,
+            "name": credentials.fname + " " + credentials.lname,
             "password": credentials.password,
             "email":credentials.email
           }
@@ -62,6 +62,7 @@ const Register = ({ loggedIn, setLoggedIn }) => {
         setErrorMessage("");
         // Store the tokens in localStorage or secure cookie for later use
         localStorage.setItem("token", token);
+        localStorage.setItem("role", "user");
         console.log(token);
         navigate("/");
         setLoggedIn(true);
@@ -78,6 +79,7 @@ const Register = ({ loggedIn, setLoggedIn }) => {
       <Container className="register-container">
         <span className="logo">Tronix.Inc</span>
         <h3 className="mt-2 mb-2">Register</h3>
+        <p>{errorMessage}</p>
         <Row>
           <Col>
             <FloatingLabel

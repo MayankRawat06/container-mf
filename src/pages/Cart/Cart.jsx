@@ -9,6 +9,8 @@ import { Link } from "react-router-dom";
 import Col from "react-bootstrap/Col";
 import OrderSummary from "../../components/OrderSummary/OrderSummary";
 import CartProduct from "../../components/CartProduct/CartProduct";
+
+import EmptyCart from "../EmptyCart/EmptyCart";
 const Cart = ({ loggedIn, setLoggedIn }) => {
   const [total, setTotal] = useState(0);
   const [cart, setCart] = useState(null);
@@ -59,19 +61,12 @@ const Cart = ({ loggedIn, setLoggedIn }) => {
   }, [cart, productDetails]);
 
   if (!cart) {
-    return <div className="min-vh-100">Loading...</div>;
+    return <div className="min-vh-100 mt-5 mb-5">Loading...</div>;
   }
 
   if (cart.length == 0) {
     return (
-      <Container className="empty-cart">
-        <h3 className="lead">It's empty in here.</h3>
-        <Link className="link d-grid" to="/products">
-          <Button className="btn-light btn-outline-dark" size="lg">
-            Continue Shopping
-          </Button>
-        </Link>
-      </Container>
+      <EmptyCart />
     );
   }
   return (

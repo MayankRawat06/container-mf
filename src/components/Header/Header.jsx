@@ -1,5 +1,4 @@
 import React from "react";
-import SearchIcon from "@mui/icons-material/Search";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
@@ -24,9 +23,6 @@ const Header = ({ loggedIn, setLoggedIn }) => {
         <Nav className="icons nav-content d-flex flex-row">
           <Nav.Link className="nav-link nav-link-ltr" href="/products">
             Shop
-          </Nav.Link>
-          <Nav.Link href="/">
-            <SearchIcon />
           </Nav.Link>
           {loggedIn == false ? (
             <Nav.Link href="/auth/login">

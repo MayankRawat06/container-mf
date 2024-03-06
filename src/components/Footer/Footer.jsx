@@ -6,9 +6,13 @@ import "./Footer.scss";
 import { Link } from "react-router-dom";
 import paymentvisa from "../../img/payment-2.svg";
 import paymentmastercard from "../../img/payment-1.svg";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import EmailIcon from "@mui/icons-material/Email";
+import XIcon from "@mui/icons-material/X";
 const Footer = () => {
   return (
-    <Container fluid className="footer">
+    <Container fluid className="footer bg-black">
       <Row className="top">
         <Col className="item">
           <h1>Categories</h1>
@@ -34,19 +38,28 @@ const Footer = () => {
         <Col className="item">
           <h1>About</h1>
           <span>
-            Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore. Lorem ipsum dolor sit
-            amet conse ctetur adipisicing elit, seddo eiusmod tempor incididunt
-            ut labore etdolore.
+            Troinix.Inc allows you to walk away from the drudgery of daily needs
+            shopping, ranging from Grocery, Fitness, Home, Electronics and
+            Footwear and welcome an easy relaxed way of browsing and shopping
+            for groceries. Discover new products and shop for all your food and
+            daily needs from the comfort of your home or office. No more getting
+            stuck in traffic jams, paying for parking, standing in long queues
+            and carrying heavy bags – get everything you need, when you need,
+            right at your doorstep. Food shopping online is now easy as every
+            product on your monthly shopping list, is now available online at
+            Troinix.Inc, India’s best online daily needs store.
           </span>
         </Col>
         <Col className="item">
           <h1>Contact</h1>
-          <span>
-            Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore. Lorem ipsum dolor sit
-            amet conse ctetur adipisicing elit, seddo eiusmod tempor incididunt
-            ut labore etdolore.
+          <span className="">
+            <span>Reach out to us</span>
+            <div className="d-flex justify-content-between mt-2 p-3">
+              <XIcon />
+              <FacebookIcon />
+              <InstagramIcon />
+              <EmailIcon />
+            </div>
           </span>
         </Col>
       </Row>

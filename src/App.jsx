@@ -14,6 +14,7 @@ import Checkout from "./pages/Checkout/Checkout"
 import ProductGrid from './pages/ProductGrid/ProductGrid'
 import UserGrid from "./pages/UserGrid/UserGrid";
 import ResetPassword from "./pages/ResetPassword/ResetPassword";
+import Error404 from "./pages/Error404/Error404";
 const Products = React.lazy(() => import("product_mf/ProductRouter"));
 
 const Layout = ({ loggedIn, setLoggedIn }) => {
@@ -77,7 +78,15 @@ const App = () => {
         },
         {
           path: "/reset-password",
-          element: <ResetPassword loggedIn={loggedIn} setLoggedIn={setLoggedIn} />,
+          element: (
+            <ResetPassword loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
+          ),
+        },
+        {
+          path: "*",
+          element: (
+            <Error404 />
+          ),
         },
       ],
     },
