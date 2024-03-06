@@ -6,9 +6,17 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
-function showPassword() {
-  var x = document.getElementById("floatingPassword");
+import api from '../../api'
+function showPasswordOld() {
+  var x = document.getElementById("floatingPasswordOld");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+}
+function showPasswordNew() {
+  var x = document.getElementById("floatingPasswordNew");
   if (x.type === "password") {
     x.type = "text";
   } else {
@@ -22,11 +30,6 @@ const ResetPassword = ({ loggedIn, setLoggedIn }) => {
     oldPassword: "",
     newPassword: "",
   });
-//   useEffect(() => {
-//     if (loggedIn) {
-//       navigate("/", { replace: true });
-//     }
-//   }, []);
 
   const handleChange = (e) => {
     setCredentials({
@@ -43,8 +46,8 @@ const ResetPassword = ({ loggedIn, setLoggedIn }) => {
     try {
       if (form.checkValidity() === true) {
         console.log(credentials);
-        const response = await axios.post(
-          "http://localhost:8080/users/resetPassword",
+        const response = await api.put(
+          "http://localhost:8080/users/reset-password",
           credentials
         );
         console.log(response.status);
@@ -83,9 +86,9 @@ const ResetPassword = ({ loggedIn, setLoggedIn }) => {
         <Form.Check
           className="mt-3"
           type="checkbox"
-          id={`default-checkbox`}
+          id={`default-checkbox-old`}
           label={`Show Password`}
-          onClick={showPassword}
+          onClick={showPasswordOld}
         />
         <FloatingLabel controlId="floatingPasswordNew" label="New Password" className="mt-4">
           <Form.Control
@@ -103,9 +106,9 @@ const ResetPassword = ({ loggedIn, setLoggedIn }) => {
         <Form.Check
           className="mt-3"
           type="checkbox"
-          id={`default-checkbox`}
+          id={`default-checkbox-new`}
           label={`Show Password`}
-          onClick={showPassword}
+          onClick={showPasswordNew}
         />
         <Button variant="primary" type="submit" className="login-btn">
           Reset Password
