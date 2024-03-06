@@ -48,7 +48,7 @@ const Profile = () => {
                   Manage Addresses
                 </Button>
               </Link>
-              <Link className="link d-grid" to="/">
+              <Link className="link d-grid" to="/reset-password">
                 <Button className="btn-dark" size="lg">
                   Reset Password
                 </Button>

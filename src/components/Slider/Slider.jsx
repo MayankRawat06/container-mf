@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Carousel from "react-bootstrap/Carousel";
 import "./Slider.scss";
-
+import { Link } from "react-router-dom";
 const data = [
   {
     image:
@@ -46,23 +46,31 @@ function Slider() {
     setIndex(selectedIndex);
   };
   return (
-    <Carousel activeIndex={index} onSelect={handleSelect} fade>
-      {data.map((slide, i) => {
-        return (
-          <Carousel.Item className="slider" interval={1000} key={slide.image}>
-            <img
-              className="d-block w-100 slider-img"
-              src={slide.image}
-              alt="slider image"
-            />
-            <Carousel.Caption>
-              <h3 className="slider-title display-3">{slide.caption}</h3>
-              <p className="slider-caption h4">{slide.description}</p>
-            </Carousel.Caption>
-          </Carousel.Item>
-        );
-      })}
-    </Carousel>
+    
+      <Carousel activeIndex={index} onSelect={handleSelect} fade>
+        {data.map((slide, i) => {
+          return (
+            <Link to="/products">
+              <Carousel.Item
+                className="slider"
+                interval={1000}
+                key={slide.image}
+              >
+                <img
+                  className="d-block w-100 slider-img"
+                  src={slide.image}
+                  alt="slider image"
+                />
+                <Carousel.Caption>
+                  <h3 className="slider-title display-3">{slide.caption}</h3>
+                  <p className="slider-caption h4">{slide.description}</p>
+                </Carousel.Caption>
+              </Carousel.Item>
+            </Link>
+          );
+        })}
+      </Carousel>
+    
   );
 }
 

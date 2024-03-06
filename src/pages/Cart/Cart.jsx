@@ -59,7 +59,7 @@ const Cart = ({ loggedIn, setLoggedIn }) => {
   }, [cart, productDetails]);
 
   if (!cart) {
-    return <div>Loading...</div>;
+    return <div className="min-vh-100">Loading...</div>;
   }
 
   if (cart.length == 0) {
@@ -75,7 +75,7 @@ const Cart = ({ loggedIn, setLoggedIn }) => {
     );
   }
   return (
-    <Container className="cart" fluid>
+    <Container className="cart min-vh-100" fluid>
       <h1 className="m-5">Your Cart</h1>
       <div className="cart-wrapper">
         <Row className="cart-products-row">

@@ -119,20 +119,23 @@ const UserGrid = () => {
         <Button onClick={() => downloadCSV(tableData)}>Export</Button>
       </div>
       <DataTable
-              className="mt-5"
-              columns={columns}
-              data={tableData}
-              selectableRows
-              selectableRowsSingle
-              pagination
-              dense
-              highlightOnHover
-              pointerOnHover
-              striped
-              responsive
-              keyField="userID"
-              onSelectedRowsChange={(e) =>
-                  setUserEmailToDelete(e.selectedRows[0].email)}
+        className="mt-5"
+        columns={columns}
+        data={tableData}
+        selectableRows
+        selectableRowsSingle
+        pagination
+        dense
+        highlightOnHover
+        pointerOnHover
+        striped
+        responsive
+        keyField="userID"
+        onSelectedRowsChange={(e) =>
+          setUserEmailToDelete(
+            e.selectedCount > 0 ? e.selectedRows[0].email : ""
+          )
+        }
       />
     </Container>
   );

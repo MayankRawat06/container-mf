@@ -6,6 +6,7 @@ import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Link } from "react-router-dom";
 import api from "../../api";
+import AddProductModal from "../../components/AddProductModal/AddProductModal";
 
 function pivot(arr) {
   var mp = new Map();
@@ -54,7 +55,7 @@ function downloadCSV(array) {
 const ProductGrid = () => {
   const [tableData, setTableData] = useState([]);
   const [productIdToDelete, setProductIdToDelete] = useState("");
-
+  const [modalAddProductShow, setModalAddProductShow] = useState(false);
   const handleDelete = async () => {
     if (productIdToDelete == "") {
       return;
@@ -108,17 +109,30 @@ const ProductGrid = () => {
   if (!tableData) {
     return <div>Loading...</div>;
   }
+
+
+  const addProduct = (product) => {
+
+    setTableData([...tableData, product]);
+    
+  }
   return (
     <Container className="admin-products mt-5 min-vh-100">
       <h3>Manage Products</h3>
       <div className="icon-row d-flex gap-3 justify-content-end mt-4 mb-4">
-        <Link className="link" to="admin/product/add">
-          <Button className="btn-light btn-outline-dark btn-sm h-100">
-            <AddIcon />
-          </Button>
-        </Link>
         <Button
-          className="btn-light btn-outline-dark btn-sm"
+          className="btn-light btn-outline-dark btn-sm h-100"
+          onClick={() => setModalAddProductShow(true)}
+        >
+          <AddIcon />
+        </Button>
+        <AddProductModal
+          show={modalAddProductShow}
+          onHide={() => setModalAddProductShow(false)}
+          addProduct={addProduct}
+        />
+        <Button
+          className="btn-light btn-outline-dark btn-sm h-100"
           onClick={handleDelete}
         >
           <DeleteIcon />
@@ -131,7 +145,6 @@ const ProductGrid = () => {
         data={tableData}
         selectableRows
         selectableRowsSingle
-        
         pagination
         dense
         highlightOnHover
@@ -140,7 +153,7 @@ const ProductGrid = () => {
         responsive
         keyField="productId"
         onSelectedRowsChange={(e) =>
-          setProductIdToDelete(e.selectedRows[0].productId)
+          setProductIdToDelete(e.selectedCount > 0 ? e.selectedRows[0].productId : "")
         }
       />
     </Container>

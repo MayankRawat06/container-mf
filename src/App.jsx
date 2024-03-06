@@ -13,6 +13,7 @@ import Cart from "./pages/Cart/Cart";
 import Checkout from "./pages/Checkout/Checkout"
 import ProductGrid from './pages/ProductGrid/ProductGrid'
 import UserGrid from "./pages/UserGrid/UserGrid";
+import ResetPassword from "./pages/ResetPassword/ResetPassword";
 const Products = React.lazy(() => import("product_mf/ProductRouter"));
 
 const Layout = ({ loggedIn, setLoggedIn }) => {
@@ -72,9 +73,11 @@ const App = () => {
         },
         {
           path: "/admin/users",
-          element: (
-            <UserGrid loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
-          ),
+          element: <UserGrid loggedIn={loggedIn} setLoggedIn={setLoggedIn} />,
+        },
+        {
+          path: "/reset-password",
+          element: <ResetPassword loggedIn={loggedIn} setLoggedIn={setLoggedIn} />,
         },
       ],
     },

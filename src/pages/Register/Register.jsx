@@ -69,7 +69,7 @@ const Register = ({ loggedIn, setLoggedIn }) => {
       // setValidated(true);
     } catch (error) {
       // Handle login error
-      setErrorMessage("Invalid Credentials. Oops, Try again!");
+      setErrorMessage("Invalid Input. Oops, Try again!");
       console.log(error);
     }
   };
@@ -144,6 +144,13 @@ const Register = ({ loggedIn, setLoggedIn }) => {
             characters
           </Form.Control.Feedback>
         </FloatingLabel>
+        <Form.Check
+          className="mt-3"
+          type="checkbox"
+          id={`default-checkbox`}
+          label={`Show Password`}
+          onClick={showPassword}
+        />
         <Button variant="primary" type="submit" className="register-btn">
           Register
         </Button>

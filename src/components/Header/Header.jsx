@@ -51,7 +51,7 @@ const Header = ({ loggedIn, setLoggedIn }) => {
           </Nav.Link>
           <Nav.Link className="cartIcon" href="/cart">
             <ShoppingCartOutlinedIcon />
-            <span>0</span>
+            {/* <span>0</span> */}
           </Nav.Link>
         </Nav>
       </Container>

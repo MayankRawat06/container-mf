@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import "./Login.scss";
+import "./ResetPassword.scss";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -15,18 +15,18 @@ function showPassword() {
     x.type = "password";
   }
 }
-const Login = ({ loggedIn, setLoggedIn }) => {
+const ResetPassword = ({ loggedIn, setLoggedIn }) => {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
   const [credentials, setCredentials] = useState({
-    email: "",
-    password: "",
+    oldPassword: "",
+    newPassword: "",
   });
-  useEffect(() => {
-    if (loggedIn) {
-      navigate("/", { replace: true });
-    }
-  }, []);
+//   useEffect(() => {
+//     if (loggedIn) {
+//       navigate("/", { replace: true });
+//     }
+//   }, []);
 
   const handleChange = (e) => {
     setCredentials({
@@ -36,7 +36,6 @@ const Login = ({ loggedIn, setLoggedIn }) => {
   };
   const [validated, setValidated] = useState(false);
 
-
   const handleSubmit = async (e) => {
     const form = e.currentTarget;
     e.preventDefault();
@@ -45,17 +44,16 @@ const Login = ({ loggedIn, setLoggedIn }) => {
       if (form.checkValidity() === true) {
         console.log(credentials);
         const response = await axios.post(
-          "http://localhost:8080/auth/login",
+          "http://localhost:8080/users/resetPassword",
           credentials
         );
         console.log(response.status);
-        const { token } = response.data;
+        if (response.status != 200) {
+          setErrorMessage("Invalid Credentials. Oops, Try again!");
+        }
         setErrorMessage("");
         // Store the tokens in localStorage or secure cookie for later use
-        localStorage.setItem("token", token);
-        console.log(token);
         navigate("/");
-        setLoggedIn(true);
       }
     } catch (error) {
       setErrorMessage("Invalid Credentials. Oops, Try again!");
@@ -67,31 +65,34 @@ const Login = ({ loggedIn, setLoggedIn }) => {
     <Form noValidate validated={validated} onSubmit={handleSubmit}>
       <Container className="login-container">
         <span className="logo">Tronix.Inc</span>
-        <h3 className="mt-2 mb-2">Login</h3>
+        <h3 className="mt-2 mb-2">Reset Password</h3>
         <p>{errorMessage}</p>
-        <FloatingLabel
-          controlId="floatingInput"
-          label="Email address"
-          className="mb-3"
-        >
+        <FloatingLabel controlId="floatingPasswordOld" label="Old Password" className="mt-2">
           <Form.Control
-            name="email"
-            type="email"
-            placeholder="name@example.com"
-            value={credentials.email}
+            name="oldPassword"
+            type="password"
+            placeholder="Old Password"
+            value={credentials.oldPassword}
             onChange={handleChange}
             required
           />
           <Form.Control.Feedback type="invalid">
-            Please provide a valid email.
+            Please provide a valid password.
           </Form.Control.Feedback>
         </FloatingLabel>
-        <FloatingLabel controlId="floatingPassword" label="Password">
+        <Form.Check
+          className="mt-3"
+          type="checkbox"
+          id={`default-checkbox`}
+          label={`Show Password`}
+          onClick={showPassword}
+        />
+        <FloatingLabel controlId="floatingPasswordNew" label="New Password" className="mt-4">
           <Form.Control
-            name="password"
+            name="newPassword"
             type="password"
-            placeholder="Password"
-            value={credentials.password}
+            placeholder="New Password"
+            value={credentials.newPassword}
             onChange={handleChange}
             required
           />
@@ -107,14 +108,11 @@ const Login = ({ loggedIn, setLoggedIn }) => {
           onClick={showPassword}
         />
         <Button variant="primary" type="submit" className="login-btn">
-          Login
+          Reset Password
         </Button>
-        <p>
-          Don't have an account? <Link to="/auth/register">Register</Link>
-        </p>
       </Container>
     </Form>
   );
 };
 
-export default Login;
+export default ResetPassword;
