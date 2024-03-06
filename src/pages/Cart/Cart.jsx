@@ -62,6 +62,18 @@ const Cart = ({ loggedIn, setLoggedIn }) => {
     return <div>Loading...</div>;
   }
 
+  if (cart.length == 0) {
+    return (
+      <Container className="empty-cart">
+        <h3 className="lead">It's empty in here.</h3>
+        <Link className="link d-grid" to="/products">
+          <Button className="btn-light btn-outline-dark" size="lg">
+            Continue Shopping
+          </Button>
+        </Link>
+      </Container>
+    );
+  }
   return (
     <Container className="cart" fluid>
       <h1 className="m-5">Your Cart</h1>
