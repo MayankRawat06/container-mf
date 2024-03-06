@@ -9,7 +9,6 @@ import { Link } from "react-router-dom";
 import Col from "react-bootstrap/Col";
 import OrderSummary from "../../components/OrderSummary/OrderSummary";
 import CartProduct from "../../components/CartProduct/CartProduct";
-
 import EmptyCart from "../EmptyCart/EmptyCart";
 const Cart = ({ loggedIn, setLoggedIn }) => {
   const [total, setTotal] = useState(0);
@@ -66,7 +65,7 @@ const Cart = ({ loggedIn, setLoggedIn }) => {
 
   if (cart.length == 0) {
     return (
-      <EmptyCart />
+      <EmptyCart/>
     );
   }
   return (
