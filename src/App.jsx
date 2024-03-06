@@ -15,6 +15,7 @@ import ProductGrid from './pages/ProductGrid/ProductGrid'
 import UserGrid from "./pages/UserGrid/UserGrid";
 import ResetPassword from "./pages/ResetPassword/ResetPassword";
 import Error404 from "./pages/Error404/Error404";
+import Error500 from "./pages/Error500/Error500";
 const Products = React.lazy(() => import("product_mf/ProductRouter"));
 
 const Layout = ({ loggedIn, setLoggedIn }) => {

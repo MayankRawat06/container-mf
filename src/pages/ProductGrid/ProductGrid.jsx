@@ -4,7 +4,6 @@ import Container from "react-bootstrap/Container";
 import DataTable from "react-data-table-component";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { Link } from "react-router-dom";
 import api from "../../api";
 import AddProductModal from "../../components/AddProductModal/AddProductModal";
 
