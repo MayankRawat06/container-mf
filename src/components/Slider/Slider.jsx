@@ -50,23 +50,25 @@ function Slider() {
       <Carousel activeIndex={index} onSelect={handleSelect} fade>
         {data.map((slide, i) => {
           return (
-            <Link to="/products">
+            
               <Carousel.Item
                 className="slider"
                 interval={1000}
                 key={slide.image}
-              >
+            >
+              <Link to="/products">
                 <img
                   className="d-block w-100 slider-img"
                   src={slide.image}
                   alt="slider image"
-                />
+              />
+              </Link>
                 <Carousel.Caption>
                   <h3 className="slider-title display-3">{slide.caption}</h3>
                   <p className="slider-caption h4">{slide.description}</p>
                 </Carousel.Caption>
               </Carousel.Item>
-            </Link>
+            
           );
         })}
       </Carousel>
