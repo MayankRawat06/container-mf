@@ -28,6 +28,7 @@ const Register = ({ loggedIn, setLoggedIn }) => {
     password: "",
     fname: "",
     lname: "",
+    confirmPassword: "",
   });
   useEffect(() => {
     if (loggedIn) {
@@ -42,38 +43,47 @@ const Register = ({ loggedIn, setLoggedIn }) => {
     });
     console.log(credentials);
   };
+  function validate() {
+    let isValid = true;
+    if (credentials.password != credentials.confirmPassword) {
+      isValid = false;
+      setErrorMessage("Confirm password does not match");
+    }
+    return isValid;
+  }
   const handleSubmit = async (e) => {
     const form = e.currentTarget;
     e.preventDefault();
     setValidated(true);
-    try {
-      if (form.checkValidity() === true) {
-        console.log(credentials);
-        const response = await axios.post(
-          "http://localhost:8080/auth/register",
-          {
-            "name": credentials.fname + " " + credentials.lname,
-            "password": credentials.password,
-            "email":credentials.email
-          }
-        );
-        console.log(response.status);
-        const { token } = response.data;
-        setErrorMessage("");
-        // Store the tokens in localStorage or secure cookie for later use
-        localStorage.setItem("token", token);
-        localStorage.setItem("role", "USER");
-        console.log(token);
-        navigate("/");
-        setLoggedIn(true);
-      }
-      // setValidated(true);
-    } catch (error) {
-      // Handle login error
-      setErrorMessage("Invalid Input. Oops, Try again!");
-      console.log(error);
-      if (error.code == "ERR_NETWORK") {
-        navigate("/error", { replace: true });
+    if (validate()) {
+      try {
+        if (form.checkValidity() === true) {
+          console.log(credentials);
+          const response = await axios.post(
+            "http://localhost:8080/auth/register",
+            {
+              name: credentials.fname + " " + credentials.lname,
+              password: credentials.password,
+              email: credentials.email,
+            }
+          );
+          console.log(response.status);
+          const { token } = response.data;
+          setErrorMessage("");
+          localStorage.setItem("token", token);
+          localStorage.setItem("role", "USER");
+          console.log(token);
+          setLoggedIn(true);
+          navigate("/");
+        }
+        // setValidated(true);
+      } catch (error) {
+        // Handle login error
+        setErrorMessage("Invalid Input. Oops, Try again!");
+        console.log(error);
+        if (error.code == "ERR_NETWORK") {
+          navigate("/error", { replace: true });
+        }
       }
     }
   };
@@ -156,6 +166,23 @@ const Register = ({ loggedIn, setLoggedIn }) => {
           label={`Show Password`}
           onClick={showPassword}
         />
+        <FloatingLabel
+          controlId="floatingPasswordConfirm"
+          label="Confirm Password"
+          className="mt-3"
+        >
+          <Form.Control
+            name="confirmPassword"
+            type="password"
+            placeholder="Confirm Password"
+            value={credentials.confirmPassword}
+            onChange={handleChange}
+            required
+          />
+          <Form.Control.Feedback type="invalid">
+            Please provide a valid password.
+          </Form.Control.Feedback>
+        </FloatingLabel>
         <Button variant="primary" type="submit" className="register-btn">
           Register
         </Button>

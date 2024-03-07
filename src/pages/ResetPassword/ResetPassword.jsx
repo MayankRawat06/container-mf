@@ -56,6 +56,7 @@ const ResetPassword = ({ loggedIn, setLoggedIn }) => {
   const handleSubmit = async (e) => {
     const form = e.currentTarget;
     e.preventDefault();
+    setValidated(true);
     if (validate()) {
       try {
         if (form.checkValidity() === true) {
@@ -71,7 +72,9 @@ const ResetPassword = ({ loggedIn, setLoggedIn }) => {
           }
           setErrorMessage("");
           toast.success("Password updated successfully.", { autoClose: 1000 });
-          navigate("/profile");
+          setTimeout(() => {
+            navigate("/profile");
+          }, 1000);
         }
       } catch (error) {
         setErrorMessage("Invalid Credentials. Oops, Try again!");

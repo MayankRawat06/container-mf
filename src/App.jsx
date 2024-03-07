@@ -5,8 +5,6 @@ import {
   createBrowserRouter,
   RouterProvider,
   Outlet,
-  Routes,
-  Route,
 } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import Header from "./components/Header/Header";
@@ -23,6 +21,7 @@ import ResetPassword from "./pages/ResetPassword/ResetPassword";
 import Error404 from "./pages/Error404/Error404";
 import Error500 from "./pages/Error500/Error500";
 import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from "react-toastify";
 const Products = React.lazy(() => import("product_mf/ProductRouter"));
 import RequireAdmin from "./RequireAdmin";
 import RequireAuth from "./RequireAuth";

@@ -60,7 +60,7 @@ const Login = ({ loggedIn, setLoggedIn }) => {
         localStorage.setItem("token", token);
         localStorage.setItem("role", parseJwt(token).role.authority);
         console.log(token);
-        navigate("/");
+        navigate('/');
         setLoggedIn(true);
       }
     } catch (error) {
