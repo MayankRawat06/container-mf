@@ -120,6 +120,14 @@ const App = () => {
           element: <Register loggedIn={loggedIn} setLoggedIn={setLoggedIn} />,
         },
         {
+          path: "error",
+          element: <Error500 />,
+        },
+        {
+          path: "*",
+          element: <Error404 />,
+        },
+        {
           element: <RequireAuth />,
           children: [
             {
@@ -160,10 +168,6 @@ const App = () => {
               element: (
                 <UserGrid loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
               ),
-            },
-            {
-              path: "*",
-              element: <Error404 />,
             },
           ],
         },

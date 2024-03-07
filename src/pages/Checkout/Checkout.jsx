@@ -10,10 +10,8 @@ const Checkout = ({ loggedIn, setLoggedIn }) => {
   const checkoutCart = async () => {
     try {
       const response = await api.post("http://localhost:8091/cart/checkout");
-      // setUser(response.data);
-      toast.success("Order placed successfully.")
+      toast.success("Order placed successfully.", { autoClose: 1000 });
     } catch (error) {
-      // Handle error or redirect to login
       console.log(error);
     }
   };
@@ -24,7 +22,7 @@ const Checkout = ({ loggedIn, setLoggedIn }) => {
     }, []);
   return (
     <Container className="empty-cart min-vh-100 mt-5 mb-5 text-center">
-      <ToastContainer/>
+      <ToastContainer theme='dark'/>
       <img src={order} alt="" className="order-img" />
       <h5>THANK YOU</h5>
       <h3>YOUR ORDER IS CONFIRMED</h3>

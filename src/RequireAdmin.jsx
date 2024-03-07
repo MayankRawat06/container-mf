@@ -8,12 +8,11 @@ const RequireAdmin = () => {
     localStorage.getItem("role") == undefined
       ? false
       : true;
-  const location = useLocation();
 
   return isLoggedIn && isAdmin ? (
     <Outlet />
   ) : (
-    <Navigate to="/auth/login" state={{ from: location }} replace />
+    <Navigate to="/auth/login"  replace />
   );
 };
 

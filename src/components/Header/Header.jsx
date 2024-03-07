@@ -44,6 +44,12 @@ const Header = ({ loggedIn, setLoggedIn }) => {
               </NavDropdown.Item>
             </NavDropdown>
           )}
+          {loggedIn == true && localStorage.getItem("role") == "ADMIN" && (
+            <>
+              <Nav.Link href="/admin/users">Users</Nav.Link>
+              <Nav.Link href="/admin/products">Products</Nav.Link>
+            </>
+          )}
           <Nav.Link href="/">
             <FavoriteBorderOutlinedIcon />
           </Nav.Link>
