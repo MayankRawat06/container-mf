@@ -1,7 +1,5 @@
 .footer {
-    // margin-top: 100px;
-    // margin-bottom: 20px;
-    padding-top: 100px;
+    padding-top: 10px;
     padding-bottom: 20px;
     overflow-x: hidden;
     .top {
@@ -43,8 +41,10 @@
         }
         .right {
             img {
-                height: 4rem;
+                min-height: 2rem;
+                max-height: 2rem;
             }
+            
         }
     }
 }

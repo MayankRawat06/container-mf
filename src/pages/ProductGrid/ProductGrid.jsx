@@ -179,6 +179,7 @@ const ProductGrid = () => {
     {
       name: "Quantity Available",
       selector: (row) => row.quantityAvailable,
+      sortable: true,
     },
     {
       name: "Category",

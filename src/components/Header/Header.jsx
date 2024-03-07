@@ -17,7 +17,14 @@ function logout(setLoggedIn) {
 
 const Header = ({ loggedIn, setLoggedIn }) => {
   return (
-    <Navbar className="bg-body-tertiary my-navbar" expand="lg">
+    <Navbar
+      className="bg-body-tertiary my-navbar"
+      bg="dark"
+      data-bs-theme="dark"
+      expand="lg"
+      variant="dark"
+      sticky="top"
+    >
       <Container className="hi" fluid>
         <Navbar.Brand href="/" className="nav-title">
           Tronix.Inc
@@ -50,9 +57,9 @@ const Header = ({ loggedIn, setLoggedIn }) => {
               <Nav.Link href="/admin/products">Products</Nav.Link>
             </>
           )}
-          <Nav.Link href="/">
+          {/* <Nav.Link href="/">
             <FavoriteBorderOutlinedIcon />
-          </Nav.Link>
+          </Nav.Link> */}
           <Nav.Link className="cartIcon" href="/cart">
             <ShoppingCartOutlinedIcon />
             {/* <span>0</span> */}

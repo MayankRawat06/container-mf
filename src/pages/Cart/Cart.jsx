@@ -38,7 +38,6 @@ const Cart = ({ loggedIn, setLoggedIn }) => {
       setCart(cartResponse.data);
       await getProducts(cartResponse.data);
     } catch (error) {
-      // Handle error or redirect to login
       console.log(error);
       if (error.code == "ERR_NETWORK") {
         navigate("/error", { replace: true });

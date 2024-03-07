@@ -5,8 +5,8 @@ import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
-import { Link, useNavigate } from "react-router-dom";
-import api from '../../api'
+import { useNavigate } from "react-router-dom";
+import api from "../../api";
 import { ToastContainer, toast } from "react-toastify";
 function showPasswordOld() {
   var x = document.getElementById("floatingPasswordOld");
@@ -30,41 +30,55 @@ const ResetPassword = ({ loggedIn, setLoggedIn }) => {
   const [credentials, setCredentials] = useState({
     oldPassword: "",
     newPassword: "",
+    confirmPassword: "",
   });
 
   const handleChange = (e) => {
+    console.log(credentials);
     setCredentials({
       ...credentials,
       [e.target.name]: e.target.value,
     });
   };
   const [validated, setValidated] = useState(false);
-
+  function validate() {
+    let isValid = true;
+    if (credentials.newPassword != credentials.confirmPassword) {
+      isValid = false;
+      setErrorMessage("Confirm password does not match");
+    }
+    if (credentials.oldPassword == credentials.newPassword) {
+      isValid = false;
+      setErrorMessage("Old password is same as new password.");
+    }
+    return isValid;
+  }
   const handleSubmit = async (e) => {
     const form = e.currentTarget;
     e.preventDefault();
-    setValidated(true);
-    try {
-      if (form.checkValidity() === true) {
-        console.log(credentials);
-        const response = await api.put(
-          "http://localhost:8080/users/reset-password",
-          credentials
-        );
-        console.log(response.status);
-        if (response.status != 200) {
-          setErrorMessage("Invalid Credentials. Oops, Try again!");
+    if (validate()) {
+      try {
+        if (form.checkValidity() === true) {
+          const response = await api.put(
+            "http://localhost:8080/users/reset-password",
+            {
+              oldPassword: credentials.oldPassword,
+              newPassword: credentials.newPassword,
+            }
+          );
+          if (response.status != 200) {
+            setErrorMessage("Invalid Credentials. Oops, Try again!");
+          }
+          setErrorMessage("");
+          toast.success("Password updated successfully.", { autoClose: 1000 });
+          navigate("/profile");
         }
-        setErrorMessage("");
-        toast.success("Password updated successfully.", { autoClose: 1000 });
-        // Store the tokens in localStorage or secure cookie for later use
-        navigate("/profile");
-      }
-    } catch (error) {
-      setErrorMessage("Invalid Credentials. Oops, Try again!");
-      console.log(error);
-      if (error.code == "ERR_NETWORK") {
-        navigate("/error", { replace: true });
+      } catch (error) {
+        setErrorMessage("Invalid Credentials. Oops, Try again!");
+        console.log(error);
+        if (error.code == "ERR_NETWORK") {
+          navigate("/error", { replace: true });
+        }
       }
     }
   };
@@ -124,6 +138,23 @@ const ResetPassword = ({ loggedIn, setLoggedIn }) => {
           label={`Show Password`}
           onClick={showPasswordNew}
         />
+        <FloatingLabel
+          controlId="floatingPasswordNewConfirm"
+          label="Confirm New Password"
+          className="mt-4"
+        >
+          <Form.Control
+            name="confirmPassword"
+            type="password"
+            placeholder="Confirm New Password"
+            value={credentials.confirmPassword}
+            onChange={handleChange}
+            required
+          />
+          <Form.Control.Feedback type="invalid">
+            Please provide a valid password.
+          </Form.Control.Feedback>
+        </FloatingLabel>
         <Button variant="primary" type="submit" className="login-btn">
           Reset Password
         </Button>
