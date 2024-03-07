@@ -43,11 +43,11 @@ const Profile = () => {
               <h6>{user.email}</h6>
             </div>
             <div class="d-flex flex-row text-white mt-5 justify-content-between">
-              <Link className="link d-grid" to="/">
+              {/* <Link className="link d-grid" to="/">
                 <Button className="btn-dark" size="lg">
                   Manage Addresses
                 </Button>
-              </Link>
+              </Link> */}
               <Link className="link d-grid" to="/reset-password">
                 <Button className="btn-dark" size="lg">
                   Reset Password
