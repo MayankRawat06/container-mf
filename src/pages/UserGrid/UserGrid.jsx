@@ -138,7 +138,7 @@ const UserGrid = () => {
           (item) => item.email !== userEmailToDelete
         );
         setTableData(newTableData);
-        toast.success("Product Deleted Successfully.", { autoClose: 1000 });
+        toast.success("User Deleted Successfully.", { autoClose: 1000 });
       }
     } catch (error) {
       console.log(error);
