@@ -5,11 +5,12 @@ import axios from "axios";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
-import { Link } from "react-router-dom";
+import { Link, redirect } from "react-router-dom";
 import Col from "react-bootstrap/Col";
 import CartProduct from "../../components/CartProduct/CartProduct";
 import EmptyCart from "../EmptyCart/EmptyCart";
 import OrderSummary from "../../components/OrderSummary/OrderSummary";
+import UnauthorizedCart from "../UnauthorizedCart/UnauthorizedCart";
 
 const Cart = ({ loggedIn, setLoggedIn }) => {
   const [total, setTotal] = useState(0);
@@ -62,6 +63,9 @@ const Cart = ({ loggedIn, setLoggedIn }) => {
 
   if (!cart) {
     return <div className="min-vh-100 mt-5 mb-5">Loading...</div>;
+  }
+  if (!loggedIn) {
+    return (<UnauthorizedCart/>);
   }
 
   if (cart.length == 0) {
