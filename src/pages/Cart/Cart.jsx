@@ -7,9 +7,10 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import { Link } from "react-router-dom";
 import Col from "react-bootstrap/Col";
-import OrderSummary from "../../components/OrderSummary/OrderSummary";
 import CartProduct from "../../components/CartProduct/CartProduct";
 import EmptyCart from "../EmptyCart/EmptyCart";
+import OrderSummary from "../../components/OrderSummary/OrderSummary";
+
 const Cart = ({ loggedIn, setLoggedIn }) => {
   const [total, setTotal] = useState(0);
   const [cart, setCart] = useState(null);

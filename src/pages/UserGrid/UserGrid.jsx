@@ -207,6 +207,7 @@ const UserGrid = () => {
         subHeader
         subHeaderComponent={subHeaderComponentMemo}
         persistTableHead
+        selectableRowsHighlight
       />
     </Container>
   );

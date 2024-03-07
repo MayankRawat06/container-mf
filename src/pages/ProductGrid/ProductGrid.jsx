@@ -7,7 +7,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import styled from "styled-components";
 import api from "../../api";
 import AddProductModal from "../../components/AddProductModal/AddProductModal";
-
+import './ProductGrid.scss'
 function pivot(arr) {
   var mp = new Map();
 
@@ -147,6 +147,7 @@ const ProductGrid = () => {
       console.log(error);
     }
   };
+    
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -162,7 +163,6 @@ const ProductGrid = () => {
 
     fetchProducts();
   }, []);
-  console.log(tableData);
   const columns = [
     {
       name: "Product ID",
@@ -190,7 +190,7 @@ const ProductGrid = () => {
     },
   ];
   if (!tableData) {
-    return <div>Loading...</div>;
+    return <Container>Loading...</Container>;
   }
 
   const addProduct = (product) => {
@@ -241,6 +241,7 @@ const ProductGrid = () => {
         subHeader
         subHeaderComponent={subHeaderComponentMemo}
         persistTableHead
+        selectableRowsHighlight
       />
     </Container>
   );
