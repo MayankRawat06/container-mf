@@ -62,7 +62,7 @@ const Register = ({ loggedIn, setLoggedIn }) => {
         setErrorMessage("");
         // Store the tokens in localStorage or secure cookie for later use
         localStorage.setItem("token", token);
-        localStorage.setItem("role", "user");
+        localStorage.setItem("role", "USER");
         console.log(token);
         navigate("/");
         setLoggedIn(true);

@@ -15,6 +15,13 @@ function showPassword() {
     x.type = "password";
   }
 }
+const parseJwt = (token) => {
+  try {
+    return JSON.parse(atob(token.split(".")[1]));
+  } catch (e) {
+    return null;
+  }
+};
 const Login = ({ loggedIn, setLoggedIn }) => {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
@@ -43,16 +50,17 @@ const Login = ({ loggedIn, setLoggedIn }) => {
     setValidated(true);
     try {
       if (form.checkValidity() === true) {
-        console.log(credentials);
+        // console.log(credentials);
         const response = await axios.post(
           "http://localhost:8080/auth/login",
           credentials
         );
-        console.log(response.status);
+        // console.log(response.status);
         const { token } = response.data;
         setErrorMessage("");
         // Store the tokens in localStorage or secure cookie for later use
         localStorage.setItem("token", token);
+        localStorage.setItem("role", parseJwt(token).role.authority);
         console.log(token);
         navigate("/");
         setLoggedIn(true);
