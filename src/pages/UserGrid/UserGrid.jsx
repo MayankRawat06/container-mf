@@ -3,7 +3,7 @@ import DataTable from "react-data-table-component";
 import api from "../../api";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
-import { Link } from "react-router-dom";
+import styled from "styled-components";
 import DeleteIcon from "@mui/icons-material/Delete";
 function pivot(arr) {
   var mp = new Map();
@@ -35,10 +35,8 @@ function toCsv(arr) {
 }
 
 function downloadCSV(array) {
-    const link = document.createElement("a");
-    const newArray = array.map(
-      ({ password, ...keepAttrs }) => keepAttrs
-    );
+  const link = document.createElement("a");
+  const newArray = array.map(({ password, ...keepAttrs }) => keepAttrs);
   let csv = toCsv(pivot(newArray));
   if (csv == null) return;
 
@@ -52,27 +50,96 @@ function downloadCSV(array) {
   link.setAttribute("download", filename);
   link.click();
 }
+
+const FilterComponent = ({ filterText, onFilter, onClear }) => (
+  <>
+    <TextField
+      id="search"
+      type="text"
+      placeholder="Search"
+      aria-label="Search Input"
+      value={filterText}
+      onChange={onFilter}
+    />
+    <ClearButton type="button" onClick={onClear}>
+      X
+    </ClearButton>
+  </>
+);
+const TextField = styled.input`
+  height: 32px;
+  width: 200px;
+  border-radius: 3px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border: 1px solid #e5e5e5;
+  padding: 0 32px 0 16px;
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const ClearButton = styled(Button)`
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  height: 34px;
+  width: 32px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 const UserGrid = () => {
-    const [tableData, setTableData] = useState([]);
-    const [userEmailToDelete, setUserEmailToDelete] = useState("");
-    const handleDelete = async () => {
-      if (userEmailToDelete == "") {
-        return;
-      }
-      try {
-        const response = await api.delete(
-          `http://localhost:8080/users/delete/${userEmailToDelete}`
-        );
-        if (response.status == 200) {
-          const newTableData = tableData.filter(
-            (item) => item.email !== userEmailToDelete
-          );
-          setTableData(newTableData);
-        }
-      } catch (error) {
-        console.log(error);
+  const [tableData, setTableData] = useState([]);
+  const [userEmailToDelete, setUserEmailToDelete] = useState("");
+  const [filterText, setFilterText] = React.useState("");
+  const [resetPaginationToggle, setResetPaginationToggle] =
+    React.useState(false);
+  const filteredItems = tableData.filter(
+    (item) =>
+      (item.name &&
+        item.name.toLowerCase().includes(filterText.toLowerCase())) ||
+      (item.email &&
+        item.email.toLowerCase().includes(filterText.toLowerCase()))
+  );
+  const subHeaderComponentMemo = React.useMemo(() => {
+    const handleClear = () => {
+      if (filterText) {
+        setResetPaginationToggle(!resetPaginationToggle);
+        setFilterText("");
       }
     };
+    return (
+      <FilterComponent
+        onFilter={(e) => setFilterText(e.target.value)}
+        onClear={handleClear}
+        filterText={filterText}
+      />
+    );
+  }, [filterText, resetPaginationToggle]);
+  const handleDelete = async () => {
+    if (userEmailToDelete == "") {
+      return;
+    }
+    try {
+      const response = await api.delete(
+        `http://localhost:8080/users/delete/${userEmailToDelete}`
+      );
+      if (response.status == 200) {
+        const newTableData = tableData.filter(
+          (item) => item.email !== userEmailToDelete
+        );
+        setTableData(newTableData);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -121,10 +188,11 @@ const UserGrid = () => {
       <DataTable
         className="mt-5"
         columns={columns}
-        data={tableData}
+        data={filteredItems}
         selectableRows
         selectableRowsSingle
         pagination
+        paginationResetDefaultPage={resetPaginationToggle}
         dense
         highlightOnHover
         pointerOnHover
@@ -136,6 +204,9 @@ const UserGrid = () => {
             e.selectedCount > 0 ? e.selectedRows[0].email : ""
           )
         }
+        subHeader
+        subHeaderComponent={subHeaderComponentMemo}
+        persistTableHead
       />
     </Container>
   );

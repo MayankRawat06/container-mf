@@ -4,6 +4,7 @@ import Container from "react-bootstrap/Container";
 import DataTable from "react-data-table-component";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
+import styled from "styled-components";
 import api from "../../api";
 import AddProductModal from "../../components/AddProductModal/AddProductModal";
 
@@ -51,10 +52,83 @@ function downloadCSV(array) {
   link.setAttribute("download", filename);
   link.click();
 }
+const FilterComponent = ({ filterText, onFilter, onClear }) => (
+  <>
+    <TextField
+      id="search"
+      type="text"
+      placeholder="Search"
+      aria-label="Search Input"
+      value={filterText}
+      onChange={onFilter}
+    />
+    <ClearButton type="button" onClick={onClear}>
+      X
+    </ClearButton>
+  </>
+);
+const TextField = styled.input`
+  height: 32px;
+  width: 200px;
+  border-radius: 3px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border: 1px solid #e5e5e5;
+  padding: 0 32px 0 16px;
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const ClearButton = styled(Button)`
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  height: 34px;
+  width: 32px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 const ProductGrid = () => {
   const [tableData, setTableData] = useState([]);
   const [productIdToDelete, setProductIdToDelete] = useState("");
   const [modalAddProductShow, setModalAddProductShow] = useState(false);
+  const [filterText, setFilterText] = React.useState("");
+  const [resetPaginationToggle, setResetPaginationToggle] =
+    React.useState(false);
+  const filteredItems = tableData.filter(
+    (item) =>
+      (item.title &&
+        item.title.toLowerCase().includes(filterText.toLowerCase())) ||
+      (
+        item.description &&
+        item.description.toLowerCase().includes(filterText.toLowerCase())
+      )|| (
+        item.categoryTitle &&
+          item.categoryTitle.toLowerCase().includes(filterText.toLowerCase())
+      )
+  );
+  const subHeaderComponentMemo = React.useMemo(() => {
+    const handleClear = () => {
+      if (filterText) {
+        setResetPaginationToggle(!resetPaginationToggle);
+        setFilterText("");
+      }
+    };
+    return (
+      <FilterComponent
+        onFilter={(e) => setFilterText(e.target.value)}
+        onClear={handleClear}
+        filterText={filterText}
+      />
+    );
+  }, [filterText, resetPaginationToggle]);
   const handleDelete = async () => {
     if (productIdToDelete == "") {
       return;
@@ -74,9 +148,19 @@ const ProductGrid = () => {
     }
   };
   useEffect(() => {
-    fetch("http://localhost:8090/products/fetchAll")
-      .then((data) => data.json())
-      .then((data) => setTableData(data));
+    const fetchProducts = async () => {
+      try {
+        const response = await api.get(
+          "http://localhost:8090/products/all?size=999"
+        );
+        setTableData(response.data.content);
+      } catch (error) {
+        // Handle error or redirect to login
+        console.log(error);
+      }
+    };
+
+    fetchProducts();
   }, []);
   console.log(tableData);
   const columns = [
@@ -109,11 +193,8 @@ const ProductGrid = () => {
     return <div>Loading...</div>;
   }
 
-
   const addProduct = (product) => {
-
     setTableData([...tableData, product]);
-    
   }
   return (
     <Container className="admin-products mt-5 min-vh-100">
@@ -141,10 +222,11 @@ const ProductGrid = () => {
       <DataTable
         className="mt-5"
         columns={columns}
-        data={tableData}
+        data={filteredItems}
         selectableRows
         selectableRowsSingle
         pagination
+        paginationResetDefaultPage={resetPaginationToggle}
         dense
         highlightOnHover
         pointerOnHover
@@ -152,8 +234,13 @@ const ProductGrid = () => {
         responsive
         keyField="productId"
         onSelectedRowsChange={(e) =>
-          setProductIdToDelete(e.selectedCount > 0 ? e.selectedRows[0].productId : "")
+          setProductIdToDelete(
+            e.selectedCount > 0 ? e.selectedRows[0].productId : ""
+          )
         }
+        subHeader
+        subHeaderComponent={subHeaderComponentMemo}
+        persistTableHead
       />
     </Container>
   );
