@@ -11,6 +11,7 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 function logout(setLoggedIn) {
   localStorage.removeItem("token");
   localStorage.removeItem("role");
+  localStorage.clear();
   setLoggedIn(false);
 }
 
