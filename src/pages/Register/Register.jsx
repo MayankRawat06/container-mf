@@ -72,6 +72,9 @@ const Register = ({ loggedIn, setLoggedIn }) => {
       // Handle login error
       setErrorMessage("Invalid Input. Oops, Try again!");
       console.log(error);
+      if (error.code == "ERR_NETWORK") {
+        navigate("/error", { replace: true });
+      }
     }
   };
   return (

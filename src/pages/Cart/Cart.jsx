@@ -52,7 +52,6 @@ const Cart = ({ loggedIn, setLoggedIn }) => {
       const id = item.id;
       const product = productDetails[index] ? productDetails[index].data : null;
       subtotal = subtotal + (product ? product.price * item.quantity : 0);
-      console.log(subtotal, product);
     });
     setTotal(subtotal);
   };

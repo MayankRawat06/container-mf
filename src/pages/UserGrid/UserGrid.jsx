@@ -6,6 +6,7 @@ import Container from "react-bootstrap/Container";
 import styled from "styled-components";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { ToastContainer, toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 function pivot(arr) {
   var mp = new Map();
 
@@ -96,6 +97,7 @@ const ClearButton = styled(Button)`
   justify-content: center;
 `;
 const UserGrid = () => {
+  const navigate = useNavigate();
   const [tableData, setTableData] = useState([]);
   const [userEmailToDelete, setUserEmailToDelete] = useState("");
   const [filterText, setFilterText] = React.useState("");

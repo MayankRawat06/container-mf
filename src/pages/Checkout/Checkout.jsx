@@ -1,23 +1,25 @@
 import React, {useEffect} from 'react'
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
-import { Link } from "react-router-dom";
 import order from '../../img/order.svg'
 import "./Checkout.scss";
+import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import api from "../../api";
 const Checkout = ({ loggedIn, setLoggedIn }) => {
+  const navigate = useNavigate();
   const checkoutCart = async () => {
     try {
       const response = await api.post("http://localhost:8091/cart/checkout");
       toast.success("Order placed successfully.", { autoClose: 1000 });
     } catch (error) {
       console.log(error);
+      if (error.code == "ERR_NETWORK") {
+        navigate("/error", { replace: true });
+      }
     }
   };
     useEffect(() => {
-      
-
       checkoutCart();
     }, []);
   return (

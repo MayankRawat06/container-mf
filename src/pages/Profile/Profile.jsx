@@ -6,10 +6,11 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import api from "../../api";
 import profileImage from "../../img/user.jpg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Profile.scss";
 const Profile = () => {
   const [user, setUser] = useState(null);
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchProfile = async () => {
       try {
@@ -18,6 +19,9 @@ const Profile = () => {
       } catch (error) {
         // Handle error or redirect to login
         console.log(error);
+        if (error.code == "ERR_NETWORK") {
+          navigate("/error", { replace: true });
+        }
       }
     };
 

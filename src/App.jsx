@@ -40,63 +40,6 @@ const App = () => {
   const [loggedIn, setLoggedIn] = useState(
     localStorage.getItem("token") == null ? false : true
   );
-  // const router = createBrowserRouter([
-  //   {
-  //     path: "/",
-  //     exact: true,
-  //     element: <Layout loggedIn={loggedIn} setLoggedIn={setLoggedIn} />,
-  //     children: [
-  //       {
-  //         path: "/",
-  //         element: <Home />,
-  //       },
-  //       {
-  //         path: "/products/*",
-  //         element: <Products loggedIn={loggedIn} setLoggedIn={setLoggedIn} />,
-  //       },
-  //       {
-  //         path: "/auth/login",
-  //         element: <Login loggedIn={loggedIn} setLoggedIn={setLoggedIn} />,
-  //       },
-  //       {
-  //         path: "/auth/register",
-  //         element: <Register loggedIn={loggedIn} setLoggedIn={setLoggedIn} />,
-  //       },
-  //       {
-  //         path: "/profile",
-  //         element: <Profile loggedIn={loggedIn} setLoggedIn={setLoggedIn} />,
-  //       },
-  //       {
-  //         path: "/cart",
-  //         element: <Cart loggedIn={loggedIn} setLoggedIn={setLoggedIn} />,
-  //       },
-  //       {
-  //         path: "/checkout",
-  //         element: <Checkout loggedIn={loggedIn} setLoggedIn={setLoggedIn} />,
-  //       },
-  //       {
-  //         path: "/admin/products",
-  //         element: (
-  //           <ProductGrid loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
-  //         ),
-  //       },
-  //       {
-  //         path: "/admin/users",
-  //         element: <UserGrid loggedIn={loggedIn} setLoggedIn={setLoggedIn} />,
-  //       },
-  //       {
-  //         path: "/reset-password",
-  //         element: (
-  //           <ResetPassword loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
-  //         ),
-  //       },
-  //       {
-  //         path: "*",
-  //         element: <Error404 />,
-  //       },
-  //     ],
-  //   },
-  // ]);
   const router = createBrowserRouter([
     {
       path: "/",
@@ -179,25 +122,6 @@ const App = () => {
     <div>
       <Suspense fallback={<div>Loading..</div>}>
         <RouterProvider router={router} />
-        {/* <Routes>
-    <Route exact path='/' element={< Home />}/>
-    <Route path='/products' element={< Products />}/>
-    <Route path='/auth/login' element={< Login />}/>
-    <Route path='/auth/register' element={< Register />}/>
-    
-    <Route path='/error' element={<Error500/>}/>
- 
-    <Route element={<RequireAdmin/>}>
-      <Route exact path='/admin/users' element={<UserGrid/>}/>
-      <Route exact path='/admin/products' element={<ProductGrid/>}/>
-    </Route>
- 
-    <Route element={< RequireAuth />}>
-      <Route path='/profile' element={< Profile />}/>
-      <Route path='/cart' element={< Cart />}/>
-      <Route path='/checkout' element={< Checkout />}/>
-          </Route>
-          </Routes> */}
       </Suspense>
     </div>
   );

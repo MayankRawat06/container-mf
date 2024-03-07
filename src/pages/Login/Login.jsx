@@ -50,12 +50,10 @@ const Login = ({ loggedIn, setLoggedIn }) => {
     setValidated(true);
     try {
       if (form.checkValidity() === true) {
-        // console.log(credentials);
         const response = await axios.post(
           "http://localhost:8080/auth/login",
           credentials
         );
-        // console.log(response.status);
         const { token } = response.data;
         setErrorMessage("");
         // Store the tokens in localStorage or secure cookie for later use
@@ -67,6 +65,9 @@ const Login = ({ loggedIn, setLoggedIn }) => {
       }
     } catch (error) {
       setErrorMessage("Invalid Credentials. Oops, Try again!");
+      if (error.code == "ERR_NETWORK") {
+        navigate("/error", { replace: true });
+      }
       console.log(error);
     }
   };
