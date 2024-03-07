@@ -5,7 +5,7 @@ import axios from "axios";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
-import { Link, redirect } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Col from "react-bootstrap/Col";
 import CartProduct from "../../components/CartProduct/CartProduct";
 import EmptyCart from "../EmptyCart/EmptyCart";
@@ -13,6 +13,7 @@ import OrderSummary from "../../components/OrderSummary/OrderSummary";
 import UnauthorizedCart from "../UnauthorizedCart/UnauthorizedCart";
 
 const Cart = ({ loggedIn, setLoggedIn }) => {
+  const navigate = useNavigate();
   const [total, setTotal] = useState(0);
   const [cart, setCart] = useState(null);
   const deleteUtils = (cartData) => {
@@ -39,6 +40,9 @@ const Cart = ({ loggedIn, setLoggedIn }) => {
     } catch (error) {
       // Handle error or redirect to login
       console.log(error);
+      if (error.code == "ERR_NETWORK") {
+        navigate("/error", { replace: true });
+      }
     }
   };
   const getTotalPrice = () => {

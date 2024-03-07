@@ -5,6 +5,7 @@ import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import styled from "styled-components";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { ToastContainer, toast } from "react-toastify";
 function pivot(arr) {
   var mp = new Map();
 
@@ -135,9 +136,13 @@ const UserGrid = () => {
           (item) => item.email !== userEmailToDelete
         );
         setTableData(newTableData);
+        toast.success("Product Deleted Successfully.", { autoClose: 1000 });
       }
     } catch (error) {
       console.log(error);
+      if (error.code == "ERR_NETWORK") {
+        navigate("/error", { replace: true });
+      }
     }
   };
   useEffect(() => {
@@ -148,6 +153,9 @@ const UserGrid = () => {
       } catch (error) {
         // Handle error or redirect to login
         console.log(error);
+        if (error.code == "ERR_NETWORK") {
+          navigate("/error", { replace: true });
+        }
       }
     };
 
@@ -175,6 +183,7 @@ const UserGrid = () => {
   }
   return (
     <Container className="admin-products mt-5 min-vh-100">
+      <ToastContainer theme="dark" />
       <h3>Manage Users</h3>
       <div className="icon-row d-flex gap-3 justify-content-end mt-4 mb-4">
         <Button

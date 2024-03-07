@@ -16,16 +16,16 @@ const Footer = () => {
       <Row className="top">
         <Col className="item">
           <h1>Categories</h1>
-          <Link className="link" to="">
+          <Link className="link" to="/products">
             Grocery
           </Link>
-          <Link className="link" to="">
+          <Link className="link" to="/products">
             Electronics
           </Link>
-          <Link className="link" to="">
+          <Link className="link" to="/products">
             Footwear
           </Link>
-          <Link className="link" to="">
+          <Link className="link" to="/products">
             Home
           </Link>
         </Col>

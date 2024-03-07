@@ -7,6 +7,7 @@ import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import { Link, useNavigate } from "react-router-dom";
 import api from '../../api'
+import { ToastContainer, toast } from "react-toastify";
 function showPasswordOld() {
   var x = document.getElementById("floatingPasswordOld");
   if (x.type === "password") {
@@ -55,22 +56,31 @@ const ResetPassword = ({ loggedIn, setLoggedIn }) => {
           setErrorMessage("Invalid Credentials. Oops, Try again!");
         }
         setErrorMessage("");
+        toast.success("Password updated successfully.", { autoClose: 1000 });
         // Store the tokens in localStorage or secure cookie for later use
-        navigate("/");
+        navigate("/profile");
       }
     } catch (error) {
       setErrorMessage("Invalid Credentials. Oops, Try again!");
       console.log(error);
+      if (error.code == "ERR_NETWORK") {
+        navigate("/error", { replace: true });
+      }
     }
   };
 
   return (
     <Form noValidate validated={validated} onSubmit={handleSubmit}>
+      <ToastContainer theme="dark" />
       <Container className="login-container">
         <span className="logo">Tronix.Inc</span>
         <h3 className="mt-2 mb-2">Reset Password</h3>
         <p>{errorMessage}</p>
-        <FloatingLabel controlId="floatingPasswordOld" label="Old Password" className="mt-2">
+        <FloatingLabel
+          controlId="floatingPasswordOld"
+          label="Old Password"
+          className="mt-2"
+        >
           <Form.Control
             name="oldPassword"
             type="password"
@@ -90,7 +100,11 @@ const ResetPassword = ({ loggedIn, setLoggedIn }) => {
           label={`Show Password`}
           onClick={showPasswordOld}
         />
-        <FloatingLabel controlId="floatingPasswordNew" label="New Password" className="mt-4">
+        <FloatingLabel
+          controlId="floatingPasswordNew"
+          label="New Password"
+          className="mt-4"
+        >
           <Form.Control
             name="newPassword"
             type="password"

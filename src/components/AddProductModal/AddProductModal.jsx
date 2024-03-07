@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
-import Container from "react-bootstrap/Container";
 import Modal from "react-bootstrap/Modal";
 import Row from "react-bootstrap/Row";
 import Form from "react-bootstrap/Form";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
+import { toast } from "react-toastify";
 import axios from "axios";
 const AddProductModal = (props) => {
   const [specifications, setSpecifications] = useState([
@@ -64,7 +64,7 @@ const AddProductModal = (props) => {
         if (response.status != 200) {
           setErrorMessage("Invalid Product Details. Oops, Try again!");
         }
-
+        toast.success("Product Added Successfully.", { autoClose: 1000 });
         props.addProduct({
           ...product,
           categoryID: product.categoryTitle,
@@ -101,6 +101,7 @@ const AddProductModal = (props) => {
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
+          <p>{errorMessage}</p>
           <FloatingLabel
             controlId="floatingInput"
             label="Product Title"

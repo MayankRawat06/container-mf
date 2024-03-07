@@ -6,8 +6,9 @@ import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 import styled from "styled-components";
 import api from "../../api";
+import { ToastContainer, toast } from "react-toastify";
 import AddProductModal from "../../components/AddProductModal/AddProductModal";
-import './ProductGrid.scss'
+import "./ProductGrid.scss";
 function pivot(arr) {
   var mp = new Map();
 
@@ -106,13 +107,10 @@ const ProductGrid = () => {
     (item) =>
       (item.title &&
         item.title.toLowerCase().includes(filterText.toLowerCase())) ||
-      (
-        item.description &&
-        item.description.toLowerCase().includes(filterText.toLowerCase())
-      )|| (
-        item.categoryTitle &&
-          item.categoryTitle.toLowerCase().includes(filterText.toLowerCase())
-      )
+      (item.description &&
+        item.description.toLowerCase().includes(filterText.toLowerCase())) ||
+      (item.categoryTitle &&
+        item.categoryTitle.toLowerCase().includes(filterText.toLowerCase()))
   );
   const subHeaderComponentMemo = React.useMemo(() => {
     const handleClear = () => {
@@ -142,12 +140,16 @@ const ProductGrid = () => {
           (item) => item.productId !== productIdToDelete
         );
         setTableData(newTableData);
+        toast.success("Product Deleted Successfully.", { autoClose: 1000 });
       }
     } catch (error) {
+      if (error.code == "ERR_NETWORK") {
+        navigate("/error", { replace: true });
+      }
       console.log(error);
     }
   };
-    
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -195,9 +197,10 @@ const ProductGrid = () => {
 
   const addProduct = (product) => {
     setTableData([...tableData, product]);
-  }
+  };
   return (
     <Container className="admin-products mt-5 min-vh-100">
+      <ToastContainer theme="dark" />
       <h3>Manage Products</h3>
       <div className="icon-row d-flex gap-3 justify-content-end mt-4 mb-4">
         <Button
