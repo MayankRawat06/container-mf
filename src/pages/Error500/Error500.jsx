@@ -1,7 +1,5 @@
 import React from "react";
-import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
-import { Link } from "react-router-dom";
 import Error500Image from '../../img/error500.svg'
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -17,11 +15,6 @@ const Error500 = () => {
             An error has occured and we're working to fix the problem.
             We'll be up and running shortly.
           </h3>
-          {/* <Link className="link" to="/">
-            <Button className="btn-light btn-outline-dark" size="lg">
-              Home
-            </Button>
-          </Link> */}
         </Col>
         <Col>
           <img src={Error500Image} alt="" className="error-img" />
