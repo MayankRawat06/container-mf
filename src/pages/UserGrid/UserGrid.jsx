@@ -7,6 +7,7 @@ import styled from "styled-components";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import ConfirmationModal from "../../components/ConfirmationModal/ConfirmationModal";
 function pivot(arr) {
   var mp = new Map();
 
@@ -125,6 +126,7 @@ const UserGrid = () => {
       />
     );
   }, [filterText, resetPaginationToggle]);
+  const [modalShow, setModalShow] = useState(false);
   const handleDelete = async () => {
     if (userEmailToDelete == "") {
       return;
@@ -190,10 +192,16 @@ const UserGrid = () => {
       <div className="icon-row d-flex gap-3 justify-content-end mt-4 mb-4">
         <Button
           className="btn-light btn-outline-dark btn-sm"
-          onClick={handleDelete}
+          onClick={() => setModalShow(true)}
         >
           <DeleteIcon />
         </Button>
+        <ConfirmationModal
+          text="Do you want to delete user?"
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+          handleDelete={handleDelete}
+        />
         <Button onClick={() => downloadCSV(tableData)}>Export</Button>
       </div>
       <DataTable

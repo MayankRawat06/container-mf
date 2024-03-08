@@ -6,6 +6,7 @@ import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 import styled from "styled-components";
 import api from "../../api";
+import ConfirmationModal from "../../components/ConfirmationModal/ConfirmationModal";
 import { ToastContainer, toast } from "react-toastify";
 import AddProductModal from "../../components/AddProductModal/AddProductModal";
 import "./ProductGrid.scss";
@@ -97,6 +98,7 @@ const ClearButton = styled(Button)`
   justify-content: center;
 `;
 const ProductGrid = () => {
+  const [modalShow, setModalShow] = useState(false);
   const [tableData, setTableData] = useState([]);
   const [productIdToDelete, setProductIdToDelete] = useState("");
   const [modalAddProductShow, setModalAddProductShow] = useState(false);
@@ -187,7 +189,7 @@ const ProductGrid = () => {
       sortable: true,
     },
     {
-      name: "Price",
+      name: "Price(in ₹)",
       selector: (row) => row.price,
       sortable: true,
     },
@@ -217,10 +219,16 @@ const ProductGrid = () => {
         />
         <Button
           className="btn-light btn-outline-dark btn-sm h-100"
-          onClick={handleDelete}
+          onClick={() => setModalShow(true)}
         >
           <DeleteIcon />
         </Button>
+        <ConfirmationModal
+          text="Do you want to delete product?"
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+          handleDelete={handleDelete}
+        />
         <Button onClick={() => downloadCSV(tableData)}>Export</Button>
       </div>
       <DataTable
