@@ -2,22 +2,23 @@ import React, {useState, useEffect} from "react";
 import api from "../../api";
 import Form from "react-bootstrap/Form";
 import { useNavigate } from "react-router-dom";
-const CategoryDropDown = () => {
+const CategoryDropDown = ({category, setCategory}) => {
   const [categories, setCategories] = useState([]);
   const navigate = useNavigate();
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await api.get("http://localhost:8090/categories/all");
-        setCategories(response.data);
-      } catch (error) {
-        // Handle error or redirect to login
-        console.log(error);
-        if (error.code == "ERR_NETWORK") {
-          navigate("/error", { replace: true });
-        }
+  const fetchCategories = async () => {
+    try {
+      const response = await api.get("http://localhost:8090/categories/all");
+      setCategories(response.data);
+    } catch (error) {
+      // Handle error or redirect to login
+      console.log(error);
+      if (error.code == "ERR_NETWORK") {
+        navigate("/error", { replace: true });
       }
-    };
+    }
+  };
+  useEffect(() => {
+    
 
     fetchCategories();
   }, []);
@@ -26,18 +27,20 @@ const CategoryDropDown = () => {
     return <div>Loading...</div>;
   }
     return (
-        <Form.Select>
+      <div className="category-wrapper mb-4">
+        <p>Category</p>
+        <Form.Select required onChange={(e) => setCategory(e.target.value)}>
           {categories &&
             categories.map((item) => {
-              const id = item.categoryId;
-
+              // console.log(item);
               return (
-                <option value={id} key={id} onClick={console.log(id)}>
+                <option value={item.title} key={item.categoryId}>
                   {item.title}
                 </option>
               );
             })}
         </Form.Select>
+      </div>
     );
 };
 

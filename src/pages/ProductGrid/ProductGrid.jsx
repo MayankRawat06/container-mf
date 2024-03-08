@@ -9,7 +9,6 @@ import api from "../../api";
 import { ToastContainer, toast } from "react-toastify";
 import AddProductModal from "../../components/AddProductModal/AddProductModal";
 import "./ProductGrid.scss";
-import CategoryDropDown from "../../components/CategoryDropDown/CategoryDropDown";
 function pivot(arr) {
   var mp = new Map();
 
@@ -248,7 +247,6 @@ const ProductGrid = () => {
         persistTableHead
         selectableRowsHighlight
       />
-      <CategoryDropDown/>
     </Container>
   );
 };

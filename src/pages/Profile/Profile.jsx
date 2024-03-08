@@ -33,8 +33,8 @@ const Profile = () => {
     return <div>Loading...</div>;
   }
   return (
-    <Container className="mt-5 mb-5 ">
-      <ToastContainer theme="dark"/>
+    <Container className="mt-5 min-vh-50 mb-5 ">
+      <ToastContainer theme="dark" />
       <Row className="no-gutters">
         <Col md={6} lg={6}>
           <img src={profileImage} />

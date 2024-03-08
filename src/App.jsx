@@ -62,7 +62,7 @@ const App = () => {
           element: <Register loggedIn={loggedIn} setLoggedIn={setLoggedIn} />,
         },
         {
-          path: "error",
+          path: "/error",
           element: <Error500 />,
         },
         {

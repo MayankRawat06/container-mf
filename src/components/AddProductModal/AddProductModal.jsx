@@ -7,7 +7,10 @@ import Form from "react-bootstrap/Form";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import { toast } from "react-toastify";
 import axios from "axios";
+import CategoryDropdown from '../CategoryDropDown/CategoryDropDown'
 const AddProductModal = (props) => {
+  const [category, setCategory] = useState("");
+  const [validated, setValidated] = useState(false);
   const [specifications, setSpecifications] = useState([
     {
       name: "",
@@ -19,8 +22,8 @@ const AddProductModal = (props) => {
     title: "",
     quantityAvailable: 0,
     description: "",
-    categoryID: "",
-    categoryTitle: "",
+    // categoryID: "",
+    // categoryTitle: "",
     price: 0,
     imageUrl: "",
   });
@@ -29,7 +32,7 @@ const AddProductModal = (props) => {
       ...product,
       [e.target.name]: e.target.value,
     });
-    console.log(product);
+    // console.log(product);
   };
   const handleSpecificationChange = (i, e) => {
     var prevSpec = [...specifications];
@@ -47,16 +50,17 @@ const AddProductModal = (props) => {
   const handleSubmit = async (e) => {
     const form = e.currentTarget;
     e.preventDefault();
-    // setValidated(true);
-
+    setValidated(true);
     try {
       if (form.checkValidity() === true) {
-        console.log(product);
+        
         const response = await axios.post(
           "http://localhost:8090/products/add",
           {
             ...product,
-            categoryID: product.categoryTitle,
+            // categoryID: product.categoryTitle,
+            categoryID: category,
+            categoryTitle: category,
             specifications,
           }
         );
@@ -67,15 +71,17 @@ const AddProductModal = (props) => {
         toast.success("Product Added Successfully.", { autoClose: 1000 });
         props.addProduct({
           ...product,
-          categoryID: product.categoryTitle,
+          // categoryID: product.categoryTitle,
+          categoryID: category,
+          categoryTitle: category,
           specifications,
         });
         setProduct({
           title: "",
           quantityAvailable: 0,
           description: "",
-          categoryID: "",
-          categoryTitle: "",
+          // categoryID: "",
+          // categoryTitle: "",
           price: 0,
           imageUrl: "",
         });
@@ -100,7 +106,7 @@ const AddProductModal = (props) => {
         <Modal.Title>Add a Product</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form onSubmit={handleSubmit}>
+        <Form noValidate validated={validated} onSubmit={handleSubmit}>
           <p>{errorMessage}</p>
           <FloatingLabel
             controlId="floatingInput"
@@ -135,6 +141,9 @@ const AddProductModal = (props) => {
                   onChange={handleChange}
                 />
                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                <Form.Control.Feedback type="invalid">
+                  Price must be greater than 10
+                </Form.Control.Feedback>
               </FloatingLabel>
             </Col>
             <Col>
@@ -146,14 +155,16 @@ const AddProductModal = (props) => {
                 <Form.Control
                   name="quantityAvailable"
                   type="number"
-                  min={1}
+                  min={10}
                   max={5000}
                   value={product.quantityAvailable}
-                  placeholder=""
                   required
                   onChange={handleChange}
                 />
                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                <Form.Control.Feedback type="invalid">
+                  Quantity Available must be greater than 10
+                </Form.Control.Feedback>
               </FloatingLabel>
             </Col>
           </Row>
@@ -174,7 +185,9 @@ const AddProductModal = (props) => {
             />
             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
           </FloatingLabel>
-          <FloatingLabel
+
+          <CategoryDropdown category={category} setCategory={setCategory}/>
+          {/* <FloatingLabel
             controlId="floatingInput"
             label="Category"
             className="mb-3"
@@ -188,7 +201,7 @@ const AddProductModal = (props) => {
               onChange={handleChange}
             />
             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-          </FloatingLabel>
+          </FloatingLabel> */}
           <Button className="btn-dark" onClick={handleNewSpecification}>
             Add a Specification
           </Button>
@@ -244,13 +257,16 @@ const AddProductModal = (props) => {
             />
             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
           </FloatingLabel>
+          <Button className="btn-dark" type="submit">
+            Add
+          </Button>
         </Form>
       </Modal.Body>
-      <Modal.Footer>
-        <Button className="btn-dark" onClick={handleSubmit}>
+      {/* <Modal.Footer>
+        <Button className="btn-dark" type="submit">
           Add
         </Button>
-      </Modal.Footer>
+      </Modal.Footer> */}
     </Modal>
   );
 };
