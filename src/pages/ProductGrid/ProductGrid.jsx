@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
-import DataTable from "react-data-table-component";
+import DataTable, { memoize } from "react-data-table-component";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 import styled from "styled-components";
@@ -10,6 +10,7 @@ import ConfirmationModal from "../../components/ConfirmationModal/ConfirmationMo
 import { ToastContainer, toast } from "react-toastify";
 import AddProductModal from "../../components/AddProductModal/AddProductModal";
 import "./ProductGrid.scss";
+import { Link, useNavigate } from "react-router-dom";
 function pivot(arr) {
   var mp = new Map();
 
@@ -98,6 +99,7 @@ const ClearButton = styled(Button)`
   justify-content: center;
 `;
 const ProductGrid = () => {
+  const navigate = useNavigate();
   const [modalShow, setModalShow] = useState(false);
   const [tableData, setTableData] = useState([]);
   const [productIdToDelete, setProductIdToDelete] = useState("");
@@ -192,6 +194,16 @@ const ProductGrid = () => {
       name: "Price(in ₹)",
       selector: (row) => row.price,
       sortable: true,
+    },
+    {
+      name: "Actions",
+      button: true,
+      cell: (row) => {
+        var url = "/products/" + row.productId;
+        return (<Link className="link" to={url} target="_blank">
+          View
+        </Link>)
+      }
     },
   ];
   if (!tableData) {
