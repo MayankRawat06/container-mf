@@ -7,6 +7,8 @@ import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 function showPassword() {
   var x = document.getElementById("floatingPassword");
   if (x.type === "password") {
@@ -73,56 +75,68 @@ const Login = ({ loggedIn, setLoggedIn }) => {
   };
 
   return (
-    <Form noValidate validated={validated} onSubmit={handleSubmit}>
-      <Container className="login-container">
-        <span className="logo">Tronix.Inc</span>
-        <h3 className="mt-2 mb-2">Login</h3>
-        <p>{errorMessage}</p>
-        <FloatingLabel
-          controlId="floatingInput"
-          label="Email address"
-          className="mb-3"
-        >
-          <Form.Control
-            name="email"
-            type="email"
-            placeholder="name@example.com"
-            value={credentials.email}
-            onChange={handleChange}
-            required
+    <Container>
+      <Row>
+        <Col>
+          <img className="mt-5" width="500" height="400"
+            src="https://cdn.dribbble.com/users/2195595/screenshots/15497859/media/b5dbc012406f3c1238f358236039c7fc.gif"
+            alt=""
           />
-          <Form.Control.Feedback type="invalid">
-            Please provide a valid email.
-          </Form.Control.Feedback>
-        </FloatingLabel>
-        <FloatingLabel controlId="floatingPassword" label="Password">
-          <Form.Control
-            name="password"
-            type="password"
-            placeholder="Password"
-            value={credentials.password}
-            onChange={handleChange}
-            required
-          />
-          <Form.Control.Feedback type="invalid">
-            Please provide a valid password.
-          </Form.Control.Feedback>
-        </FloatingLabel>
-        <Form.Check
-          className="mt-3"
-          type="checkbox"
-          id={`default-checkbox`}
-          label={`Show Password`}
-          onClick={showPassword}
-        />
-        <Button variant="primary" type="submit" className="login-btn">
-          Login
-        </Button>
-        <p>
-          Don't have an account? <Link to="/auth/register">Register</Link>
-        </p>
-      </Container>
-    </Form>
+        </Col>
+        <Col>
+          <Form noValidate validated={validated} onSubmit={handleSubmit}>
+            <Container className="login-container">
+              <span className="logo">Tronix.Inc</span>
+              <h3 className="mt-2 mb-2">Login</h3>
+              <p>{errorMessage}</p>
+              <FloatingLabel
+                controlId="floatingInput"
+                label="Email address"
+                className="mb-3"
+              >
+                <Form.Control
+                  name="email"
+                  type="email"
+                  placeholder="name@example.com"
+                  value={credentials.email}
+                  onChange={handleChange}
+                  required
+                />
+                <Form.Control.Feedback type="invalid">
+                  Please provide a valid email.
+                </Form.Control.Feedback>
+              </FloatingLabel>
+              <FloatingLabel controlId="floatingPassword" label="Password">
+                <Form.Control
+                  name="password"
+                  type="password"
+                  placeholder="Password"
+                  value={credentials.password}
+                  onChange={handleChange}
+                  required
+                />
+                <Form.Control.Feedback type="invalid">
+                  Please provide a valid password.
+                </Form.Control.Feedback>
+              </FloatingLabel>
+              <Form.Check
+                className="mt-3"
+                type="checkbox"
+                id={`default-checkbox`}
+                label={`Show Password`}
+                onClick={showPassword}
+              />
+              <Button variant="primary" type="submit" className="login-btn">
+                Login
+              </Button>
+              <p>
+                Don't have an account? <Link to="/auth/register">Register</Link>
+              </p>
+            </Container>
+          </Form>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

@@ -11,7 +11,7 @@ const Display = () => {
       AOS.init();
     }, []);
   return (
-    <Container className="empty-cart mt-5 mb-5 text-center">
+    <Container className="mt-5 mb-5 text-center">
       <Row className="text-center mb-5">
         <h2>Our Range</h2>
       </Row>
