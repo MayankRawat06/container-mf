@@ -55,6 +55,7 @@ const Header = ({ loggedIn, setLoggedIn }) => {
             <>
               <Nav.Link href="/admin/users">Users</Nav.Link>
               <Nav.Link href="/admin/products">Products</Nav.Link>
+              <Nav.Link href="/admin/categories">Categories</Nav.Link>
             </>
           )}
           {/* <Nav.Link href="/">

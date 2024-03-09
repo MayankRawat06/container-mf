@@ -25,6 +25,7 @@ import { ToastContainer, toast } from "react-toastify";
 const Products = React.lazy(() => import("product_mf/ProductRouter"));
 import RequireAdmin from "./RequireAdmin";
 import RequireAuth from "./RequireAuth";
+import CategoryGrid from "./pages/CategoryGrid/CategoryGrid";
 const Layout = ({ loggedIn, setLoggedIn }) => {
   return (
     <div className="app">
@@ -109,6 +110,12 @@ const App = () => {
               path: "/admin/users",
               element: (
                 <UserGrid loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
+              ),
+            },
+            {
+              path: "/admin/categories",
+              element: (
+                <CategoryGrid loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
               ),
             },
           ],
