@@ -8,6 +8,8 @@ import api from "../../api";
 import profileImage from "../../img/user.jpg";
 import { ToastContainer } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
+import AOS from "aos";
+import "aos/dist/aos.css";
 import "./Profile.scss";
 const Profile = () => {
   const [user, setUser] = useState(null);
@@ -18,7 +20,6 @@ const Profile = () => {
         const response = await api.get("http://localhost:8080/users/details");
         setUser(response.data);
       } catch (error) {
-        // Handle error or redirect to login
         console.log(error);
         if (error.code == "ERR_NETWORK") {
           navigate("/error", { replace: true });
@@ -27,6 +28,7 @@ const Profile = () => {
     };
 
     fetchProfile();
+    AOS.init();
   }, []);
 
   if (!user) {
@@ -37,7 +39,7 @@ const Profile = () => {
       <ToastContainer theme="dark" />
       <Row className="no-gutters">
         <Col md={6} lg={6}>
-          <img src={profileImage} />
+          <img data-aos="fade-right" src={profileImage} alt="profile-img" />
         </Col>
         <Col md={6} lg={6}>
           <div className="d-flex flex-column">

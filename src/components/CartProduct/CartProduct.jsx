@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./CartProduct.scss";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -6,6 +6,8 @@ import Col from "react-bootstrap/Col";
 import CloseButton from "react-bootstrap/CloseButton";
 import Quantity from "../Quantity/Quantity";
 import api from "../../api";
+import AOS from "aos";
+import "aos/dist/aos.css";
 const CartProduct = ({
   productId,
   title,
@@ -15,7 +17,7 @@ const CartProduct = ({
   quantityAvailable,
   cart,
   deleteUtils,
-  fetchCart
+  fetchCart,
 }) => {
   const [quantity, setQuantity] = useState(quantityInitial);
   const handleDelete = async () => {
@@ -32,9 +34,12 @@ const CartProduct = ({
       console.log(error);
     }
   };
+  useEffect(() => {
+    AOS.init();
+  }, []);
   return (
     <Container key={productId} className="cart-product mt-5">
-      <Row className="">
+      <Row data-aos="zoom-in-up" className="">
         <Col>
           <img className="cart-product-image" src={imageUrl} alt="" />
         </Col>
@@ -47,7 +52,7 @@ const CartProduct = ({
             productId={productId}
             quantity={quantity}
             setQuantity={setQuantity}
-            fetchCart = {fetchCart}
+            fetchCart={fetchCart}
           ></Quantity>
         </Col>
         <Col>
