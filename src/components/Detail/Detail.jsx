@@ -7,8 +7,8 @@ const Detail = () => {
   return (
     <Container className="empty-cart mt-5 mb-5 text-center">
       {/* <img src={EmptyCartImage} alt="" className="empty-cart-img" /> */}
-      <h2 className='mb-5'>About Us</h2>
-      <Row className='d-flex gap-5'>
+      <h2 className="mb-5">About Us</h2>
+      <Row className="d-flex gap-5">
         <Col>
           <h4 className="about-desc">
             Tronix.Inc allows you to walk away from the drudgery of daily needs
@@ -23,8 +23,8 @@ const Detail = () => {
             Tronix.Inc, India’s best online daily needs store.
           </h4>
         </Col>
-        <Col className='text-center img-gif d-flex justify-content-center align-content-md-center'>
-          <img
+        <Col >
+          <img className='img-gif'
             src="https://cdn.dribbble.com/users/2675757/screenshots/15151563/media/8647117ba7efa39d75838e66e49dcaea.gif"
             alt=""
           />

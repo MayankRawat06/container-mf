@@ -1,11 +1,7 @@
 import React, { Suspense, useState } from "react";
 import ReactDOM from "react-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import {
-  createBrowserRouter,
-  RouterProvider,
-  Outlet,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
@@ -21,8 +17,12 @@ import ResetPassword from "./pages/ResetPassword/ResetPassword";
 import Error404 from "./pages/Error404/Error404";
 import Error500 from "./pages/Error500/Error500";
 import "react-toastify/dist/ReactToastify.css";
-import { ToastContainer, toast } from "react-toastify";
-const Products = React.lazy(() => import("product_mf/ProductRouter"));
+const Products = React.lazy(() =>
+  import("product_mf/ProductRouter").catch(() => {
+    console.error("Failed to load product micro-frontend.");
+    return { default: () => <Error500/> };
+  })
+);
 import RequireAdmin from "./RequireAdmin";
 import RequireAuth from "./RequireAuth";
 import CategoryGrid from "./pages/CategoryGrid/CategoryGrid";
