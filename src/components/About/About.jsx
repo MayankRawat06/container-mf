@@ -23,7 +23,7 @@ const About = () => {
             alt="about-img"
           />
           <h3>100% Original & Authentic</h3>
-          <h4 className="about-desc text-muted">
+          <h4 className="about-desc text-muted text-center">
             Tight control on sourcing and distribution
           </h4>
         </Col>
@@ -35,7 +35,7 @@ const About = () => {
             alt="about-img"
           />
           <h3>Wide range of products</h3>
-          <h4 className="about-desc text-muted">
+          <h4 className="about-desc text-muted text-center">
             One-stop Shopping destination
           </h4>
         </Col>
@@ -47,7 +47,7 @@ const About = () => {
             alt="about-img"
           />
           <h3>Delivery all over India</h3>
-          <h4 className="about-desc text-muted">
+          <h4 className="about-desc text-muted text-center">
             Shop from the comfort of your home
           </h4>
         </Col>

@@ -34,7 +34,6 @@ const ResetPassword = ({ loggedIn, setLoggedIn }) => {
   });
 
   const handleChange = (e) => {
-    console.log(credentials);
     setCredentials({
       ...credentials,
       [e.target.name]: e.target.value,

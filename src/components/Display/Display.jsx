@@ -15,7 +15,7 @@ const Display = () => {
       <Row className="text-center mb-5">
         <h2>Our Range</h2>
       </Row>
-      <Row>
+      <Row className='justify-content-center text-center'>
         <Link to="/products">
           <img
             data-aos="zoom-in-up"

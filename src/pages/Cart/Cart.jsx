@@ -46,7 +46,6 @@ const Cart = ({ loggedIn, setLoggedIn }) => {
   };
   const getTotalPrice = () => {
     let subtotal = 0;
-    console.log(productDetails);
     cart.map((item, index) => {
       const id = item.id;
       const product = productDetails[index] ? productDetails[index].data : null;

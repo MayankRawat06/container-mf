@@ -197,7 +197,6 @@ const ProductGrid = () => {
     },
     {
       name: "Actions",
-      button: true,
       cell: (row) => {
         var url = "/products/" + row.productId;
         return (<Link className="link" to={url} target="_blank">

@@ -23,7 +23,7 @@ const Detail = () => {
             Tronix.Inc, India’s best online daily needs store.
           </h4>
         </Col>
-        <Col>
+        <Col className='text-center img-gif d-flex justify-content-center align-content-md-center'>
           <img
             src="https://cdn.dribbble.com/users/2675757/screenshots/15151563/media/8647117ba7efa39d75838e66e49dcaea.gif"
             alt=""

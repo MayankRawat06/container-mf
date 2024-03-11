@@ -61,7 +61,6 @@ const Login = ({ loggedIn, setLoggedIn }) => {
         // Store the tokens in localStorage or secure cookie for later use
         localStorage.setItem("token", token);
         localStorage.setItem("role", parseJwt(token).role.authority);
-        console.log(token);
         navigate('/');
         setLoggedIn(true);
       }

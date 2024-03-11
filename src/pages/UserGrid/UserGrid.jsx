@@ -165,7 +165,6 @@ const UserGrid = () => {
 
     fetchUsers();
   }, []);
-  console.log(tableData);
   const columns = [
     {
       name: "User ID",

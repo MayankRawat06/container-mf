@@ -72,7 +72,6 @@ const Register = ({ loggedIn, setLoggedIn }) => {
           setErrorMessage("");
           localStorage.setItem("token", token);
           localStorage.setItem("role", "USER");
-          console.log(token);
           setLoggedIn(true);
           navigate("/");
         }

@@ -25,47 +25,51 @@ const Header = ({ loggedIn, setLoggedIn }) => {
       variant="dark"
       sticky="top"
     >
-      <Container className="hi" fluid>
+      <Container fluid>
         <Navbar.Brand href="/" className="nav-title">
           Tronix.Inc
         </Navbar.Brand>
-        <Nav className="icons nav-content d-flex flex-row">
-          <Nav.Link className="nav-link nav-link-ltr" href="/products">
-            Shop
-          </Nav.Link>
-          {loggedIn == false ? (
-            <Nav.Link href="/auth/login">
-              <PersonOutlineOutlinedIcon />
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
+          <Nav className="icons nav-content">
+            <Nav.Link className="nav-link nav-link-ltr" href="/products">
+              Shop
             </Nav.Link>
-          ) : (
-            <NavDropdown
-              title={<PersonOutlineOutlinedIcon />}
-              id="basic-nav-dropdown"
-            >
-              <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
-              <NavDropdown.Item
-                onClick={() => logout(setLoggedIn)}
-                href="/auth/login"
+            {loggedIn == true && localStorage.getItem("role") == "ADMIN" && (
+              <>
+                <Nav.Link href="/admin/users">Users</Nav.Link>
+                <Nav.Link href="/admin/products">Products</Nav.Link>
+                <Nav.Link href="/admin/categories">Categories</Nav.Link>
+              </>
+            )}
+            {loggedIn == false ? (
+              <Nav.Link href="/auth/login">
+                <PersonOutlineOutlinedIcon />
+              </Nav.Link>
+            ) : (
+              <NavDropdown
+                title={<PersonOutlineOutlinedIcon />}
+                id="basic-nav-dropdown"
               >
-                Logout
-              </NavDropdown.Item>
-            </NavDropdown>
-          )}
-          {loggedIn == true && localStorage.getItem("role") == "ADMIN" && (
-            <>
-              <Nav.Link href="/admin/users">Users</Nav.Link>
-              <Nav.Link href="/admin/products">Products</Nav.Link>
-              <Nav.Link href="/admin/categories">Categories</Nav.Link>
-            </>
-          )}
-          {/* <Nav.Link href="/">
+                <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
+                <NavDropdown.Item
+                  onClick={() => logout(setLoggedIn)}
+                  href="/auth/login"
+                >
+                  Logout
+                </NavDropdown.Item>
+              </NavDropdown>
+            )}
+
+            {/* <Nav.Link href="/">
             <FavoriteBorderOutlinedIcon />
           </Nav.Link> */}
-          <Nav.Link className="cartIcon" href="/cart">
-            <ShoppingCartOutlinedIcon />
-            {/* <span>0</span> */}
-          </Nav.Link>
-        </Nav>
+            <Nav.Link className="cartIcon" href="/cart">
+              <ShoppingCartOutlinedIcon />
+              {/* <span>0</span> */}
+            </Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
       </Container>
     </Navbar>
   );
