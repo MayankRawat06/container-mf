@@ -7,6 +7,7 @@ import Form from "react-bootstrap/Form";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import { toast } from "react-toastify";
 import axios from "axios";
+import api from "../../api";
 import CategoryDropdown from '../CategoryDropDown/CategoryDropDown'
 const AddProductModal = (props) => {
   const [category, setCategory] = useState("");
@@ -54,7 +55,7 @@ const AddProductModal = (props) => {
     try {
       if (form.checkValidity() === true) {
         
-        const response = await axios.post(
+        const response = await api.post(
           "http://localhost:8090/products/add",
           {
             ...product,
@@ -187,21 +188,6 @@ const AddProductModal = (props) => {
           </FloatingLabel>
 
           <CategoryDropdown category={category} setCategory={setCategory}/>
-          {/* <FloatingLabel
-            controlId="floatingInput"
-            label="Category"
-            className="mb-3"
-          >
-            <Form.Control
-              name="categoryTitle"
-              type="text"
-              placeholder=""
-              value={product.categoryTitle}
-              required
-              onChange={handleChange}
-            />
-            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-          </FloatingLabel> */}
           <Button className="btn-dark" onClick={handleNewSpecification}>
             Add a Specification
           </Button>

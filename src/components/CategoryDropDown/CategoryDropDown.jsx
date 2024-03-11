@@ -29,10 +29,10 @@ const CategoryDropDown = ({category, setCategory}) => {
     return (
       <div className="category-wrapper mb-4">
         <p>Category</p>
-        <Form.Select required onChange={(e) => setCategory(e.target.value)}>
+        <Form.Select required onClick={(e) => setCategory(e.target.value)}>
+          <option value="Select">Select</option>
           {categories &&
             categories.map((item) => {
-              // console.log(item);
               return (
                 <option value={item.title} key={item.categoryId}>
                   {item.title}
