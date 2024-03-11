@@ -3,13 +3,13 @@
 ### `product-microservice`
 ### `cart-microservice`
 
-### Tech-Stack for backend - `Java, Spring Boot, MongoDB, mySQL`
+### Tech-Stack for backend - `[Java, Spring Boot, MongoDB, mySQL]`
 
 ## Micro-frontends
 ### `container-mf`
 ### `product-mf`
 
-### Tech-Stack for frontend - `React, React-bootstrap`
+### Tech-Stack for frontend - `[React, React-bootstrap]`
 
 ## Available Scripts
 
