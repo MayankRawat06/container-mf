@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import api from "../../api";
 import Form from "react-bootstrap/Form";
 import { useNavigate } from "react-router-dom";
+import Spinner from 'react-bootstrap/Spinner'
 const CategoryDropDown = ({category, setCategory}) => {
   const [categories, setCategories] = useState([]);
   const navigate = useNavigate();
@@ -24,7 +25,11 @@ const CategoryDropDown = ({category, setCategory}) => {
   }, []);
 
   if (!categories) {
-    return <div>Loading...</div>;
+    return (
+      <Container className="min-vh-100 d-flex justify-content-center">
+        <Spinner className="position-fixed top-50" animation="grow" />
+      </Container>
+    );
   }
     return (
       <div className="category-wrapper mb-4">

@@ -9,6 +9,7 @@ import profileImage from "../../img/user.jpg";
 import { ToastContainer } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import AOS from "aos";
+import Spinner from "react-bootstrap/Spinner";
 import "aos/dist/aos.css";
 import "./Profile.scss";
 const Profile = () => {
@@ -32,7 +33,11 @@ const Profile = () => {
   }, []);
 
   if (!user) {
-    return <div>Loading...</div>;
+    return (
+      <Container className="min-vh-100 d-flex justify-content-center">
+        <Spinner className="position-fixed top-50" animation="grow" />
+      </Container>
+    );
   }
   return (
     <Container className="mt-5 min-vh-50 mb-5 ">

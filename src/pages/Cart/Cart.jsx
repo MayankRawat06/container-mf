@@ -5,6 +5,7 @@ import axios from "axios";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
+import Spinner from "react-bootstrap/Spinner";
 import { Link, useNavigate } from "react-router-dom";
 import Col from "react-bootstrap/Col";
 import CartProduct from "../../components/CartProduct/CartProduct";
@@ -63,7 +64,11 @@ const Cart = ({ loggedIn, setLoggedIn }) => {
   }, [cart, productDetails]);
 
   if (!cart) {
-    return <div className="min-vh-100 mt-5 mb-5">Loading...</div>;
+    return (
+      <Container className="min-vh-100 d-flex justify-content-center">
+        <Spinner className="position-fixed top-50" animation="grow" />
+      </Container>
+    );
   }
   if (!loggedIn) {
     return (<UnauthorizedCart/>);
