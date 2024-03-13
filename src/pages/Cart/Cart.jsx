@@ -12,7 +12,6 @@ import CartProduct from "../../components/CartProduct/CartProduct";
 import EmptyCart from "../EmptyCart/EmptyCart";
 import OrderSummary from "../../components/OrderSummary/OrderSummary";
 import UnauthorizedCart from "../UnauthorizedCart/UnauthorizedCart";
-
 const Cart = ({ loggedIn, setLoggedIn }) => {
   const navigate = useNavigate();
   const [total, setTotal] = useState(0);

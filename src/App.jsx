@@ -126,7 +126,7 @@ const App = () => {
 
   return (
     <div>
-      <Suspense fallback={<Error500/>}>
+      <Suspense fallback={<div>Loading..</div>}>
         <RouterProvider router={router} />
       </Suspense>
     </div>
