@@ -6,7 +6,24 @@ import Col from "react-bootstrap/Col";
 import { Link } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import './OrderSummary.scss'
-const OrderSummary = ({total}) => {
+import api from "../../api";
+const handleCheckout = async(cart) => {
+  if (localStorage.getItem("token") == undefined) {
+    toast.success("Kindly Login.", {
+      autoClose: 1000,
+    });
+    return;
+  }
+  try {
+    const response = await api.post("http://localhost:8093/orders/add", cart);
+    if (response.status == 200) {
+      console.log("Order success!")
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+const OrderSummary = ({cart, total}) => {
   return (
     <Container className="" fluid>
       <Card className="shadow rounded mb-4 order-card">
@@ -42,7 +59,7 @@ const OrderSummary = ({total}) => {
             </Col>
           </Row>
           <Link className="link d-grid" to="/checkout">
-            <Button className="btn-dark" size="lg">
+            <Button className="btn-dark" size="lg" onClick={() => handleCheckout(cart)}>
               Checkout
             </Button>
           </Link>

@@ -58,6 +58,7 @@ const Header = ({ loggedIn, setLoggedIn }) => {
                 >
                   Logout
                 </NavDropdown.Item>
+                <NavDropdown.Item href="/orders">Orders</NavDropdown.Item>
               </NavDropdown>
             )}
 

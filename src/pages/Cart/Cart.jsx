@@ -86,7 +86,7 @@ const Cart = ({ loggedIn, setLoggedIn }) => {
           <Col md="auto">
             {
               productDetails &&
-                cart &&
+                cart &&  
                 cart.map((item, index) => {
                   const id = item.id;
                   const product = productDetails[index]
@@ -112,7 +112,7 @@ const Cart = ({ loggedIn, setLoggedIn }) => {
           </Col>
           <Col lg={4}>
             <Row>
-              <OrderSummary total={total} />
+              <OrderSummary cart={cart} total={total} />
             </Row>
             <Row>
               <Col>

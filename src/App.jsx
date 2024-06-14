@@ -23,6 +23,12 @@ const Products = React.lazy(() =>
     return { default: () => <Error500/> };
   })
 );
+const Orders = React.lazy(() =>
+  import("order_mf/OrderRouter").catch(() => {
+    console.error("Failed to load order micro-frontend.");
+    return { default: () => <Error500/> };
+  })
+);
 import RequireAdmin from "./RequireAdmin";
 import RequireAuth from "./RequireAuth";
 import CategoryGrid from "./pages/CategoryGrid/CategoryGrid";
@@ -82,6 +88,10 @@ const App = () => {
             {
               path: "/cart",
               element: <Cart loggedIn={loggedIn} setLoggedIn={setLoggedIn} />,
+            },
+            {
+              path: "/orders/*",
+              element: <Orders loggedIn={loggedIn} setLoggedIn={setLoggedIn} />,
             },
             {
               path: "/checkout",
